@@ -4,8 +4,8 @@ android {
     compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "com.qwezey.androidchess"
-        minSdkVersion 'P'
-        targetSdkVersion 'P'
+        minSdkVersion 28
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
