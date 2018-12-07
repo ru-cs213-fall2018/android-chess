@@ -1,4 +1,4 @@
-package com.qwezey.android_chess;
+package com.qwezey.androidchess;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.qwezey.android_chess", appContext.getPackageName());
+        assertEquals("com.qwezey.androidchess", appContext.getPackageName());
     }
 }

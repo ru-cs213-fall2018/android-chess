@@ -1,4 +1,4 @@
-package com.qwezey.android_chess;
+package com.qwezey.androidchess;
 
 import org.junit.Test;
 
