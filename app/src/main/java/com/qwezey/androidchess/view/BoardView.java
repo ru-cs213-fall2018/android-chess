@@ -3,8 +3,6 @@ package com.qwezey.androidchess.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -42,10 +40,9 @@ public class BoardView extends View {
         this.canvas = canvas;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Coordinate c = new Coordinate(i, j);
-                Square s = getSquare(c);
-                s.updateRect();
-                canvas.drawRect(s.getRect(), s.getPaint());
+                Square s = grid[i][j];
+                s.updateRect(canvas);
+                s.draw(canvas);
             }
         }
     }
@@ -70,39 +67,5 @@ public class BoardView extends View {
         int newX = (int) x / rectWidth;
         int newY = 7 - ((int) y / rectHeight);
         return new Coordinate(newX, newY);
-    }
-
-    private class Square {
-
-        private Paint paint;
-        private Rect rect;
-        private Coordinate c;
-
-        public Square(Coordinate c, int color) {
-            rect = new Rect();
-            paint = new Paint();
-            paint.setColor(color);
-            this.c = c;
-        }
-
-        public void updateRect() {
-
-            int rectWidth = canvas.getWidth() / 8;
-            int rectHeight = canvas.getHeight() / 8;
-            int left = c.getX() * rectWidth;
-            int top = (7 - c.getY()) * rectHeight;
-            int right = left + rectWidth;
-            int bottom = top + rectHeight;
-
-            rect.set(left, top, right, bottom);
-        }
-
-        public Rect getRect() {
-            return rect;
-        }
-
-        public Paint getPaint() {
-            return paint;
-        }
     }
 }
