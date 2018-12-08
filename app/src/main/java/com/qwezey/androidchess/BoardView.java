@@ -8,8 +8,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
-import board.Board;
-import board.Coordinate;
+import com.qwezey.androidchess.board.Board;
+import com.qwezey.androidchess.board.Coordinate;
 
 public class BoardView extends View {
 
@@ -54,7 +54,7 @@ public class BoardView extends View {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Coordinate c = new Coordinate(i, j);
-                int color = board.getSquare(c).getColor() == chess.Color.White ? Color.WHITE : Color.GRAY;
+                int color = board.getSquare(c).getColor() == com.qwezey.androidchess.chess.Color.White ? Color.WHITE : Color.GRAY;
                 grid[i][j] = new Square(c, color);
             }
         }

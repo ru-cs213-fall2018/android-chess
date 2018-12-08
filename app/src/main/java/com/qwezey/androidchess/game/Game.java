@@ -1,11 +1,11 @@
-package game;
+package com.qwezey.androidchess.game;
 
-import board.Board;
-import board.Square;
-import chess.BadInputException;
-import chess.Color;
-import chess.IllegalMoveException;
-import piece.*;
+import com.qwezey.androidchess.board.Board;
+import com.qwezey.androidchess.board.Square;
+import com.qwezey.androidchess.chess.BadInputException;
+import com.qwezey.androidchess.chess.Color;
+import com.qwezey.androidchess.chess.IllegalMoveException;
+import com.qwezey.androidchess.piece.*;
 
 import java.util.HashMap;
 import java.util.Scanner;

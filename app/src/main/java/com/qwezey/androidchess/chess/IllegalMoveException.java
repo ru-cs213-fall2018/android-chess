@@ -1,4 +1,4 @@
-package chess;
+package com.qwezey.androidchess.chess;
 
 /**
  * Exception thrown when an illegal move is made

@@ -1,4 +1,4 @@
-package chess;
+package com.qwezey.androidchess.chess;
 
 /**
  * Thrown on bad user input

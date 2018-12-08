@@ -1,7 +1,7 @@
-package game;
+package com.qwezey.androidchess.game;
 
-import chess.Color;
-import piece.King;
+import com.qwezey.androidchess.chess.Color;
+import com.qwezey.androidchess.piece.King;
 
 /**
  * Represents a player

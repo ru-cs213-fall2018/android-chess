@@ -1,8 +1,8 @@
-package piece;
+package com.qwezey.androidchess.piece;
 
-import board.Board;
-import board.Square;
-import chess.Color;
+import com.qwezey.androidchess.board.Board;
+import com.qwezey.androidchess.board.Square;
+import com.qwezey.androidchess.chess.Color;
 
 /**
  * Functional interface for creating a new piece

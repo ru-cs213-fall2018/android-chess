@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import chess.BadInputException;
-import game.Game;
+import com.qwezey.androidchess.chess.BadInputException;
+import com.qwezey.androidchess.game.Game;
 
 public class MainActivity extends Activity {
 
