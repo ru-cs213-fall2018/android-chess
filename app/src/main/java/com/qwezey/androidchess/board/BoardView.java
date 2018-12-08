@@ -1,4 +1,4 @@
-package com.qwezey.androidchess;
+package com.qwezey.androidchess.board;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,9 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.qwezey.androidchess.board.Board;
-import com.qwezey.androidchess.board.Coordinate;
 
 public class BoardView extends View {
 

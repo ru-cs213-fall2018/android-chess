@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
+import com.qwezey.androidchess.board.BoardView;
 import com.qwezey.androidchess.chess.BadInputException;
 import com.qwezey.androidchess.game.Game;
 
