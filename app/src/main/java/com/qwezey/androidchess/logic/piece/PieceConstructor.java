@@ -1,8 +1,8 @@
-package com.qwezey.androidchess.piece;
+package com.qwezey.androidchess.logic.piece;
 
-import com.qwezey.androidchess.board.Board;
-import com.qwezey.androidchess.board.Square;
-import com.qwezey.androidchess.chess.Color;
+import com.qwezey.androidchess.logic.board.Board;
+import com.qwezey.androidchess.logic.board.Square;
+import com.qwezey.androidchess.logic.chess.Color;
 
 /**
  * Functional interface for creating a new piece

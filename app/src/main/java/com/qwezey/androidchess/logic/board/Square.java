@@ -1,7 +1,7 @@
-package com.qwezey.androidchess.board;
+package com.qwezey.androidchess.logic.board;
 
-import com.qwezey.androidchess.chess.Color;
-import com.qwezey.androidchess.piece.Piece;
+import com.qwezey.androidchess.logic.chess.Color;
+import com.qwezey.androidchess.logic.piece.Piece;
 
 /**
  * Represents a square on the board

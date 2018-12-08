@@ -1,4 +1,4 @@
-package com.qwezey.androidchess.board;
+package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.qwezey.androidchess.logic.board.Board;
+import com.qwezey.androidchess.logic.board.Coordinate;
 
 public class BoardView extends View {
 
@@ -51,7 +54,7 @@ public class BoardView extends View {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Coordinate c = new Coordinate(i, j);
-                int color = board.getSquare(c).getColor() == com.qwezey.androidchess.chess.Color.White ? Color.WHITE : Color.GRAY;
+                int color = board.getSquare(c).getColor() == com.qwezey.androidchess.logic.chess.Color.White ? Color.WHITE : Color.GRAY;
                 grid[i][j] = new Square(c, color);
             }
         }

@@ -1,4 +1,4 @@
-package com.qwezey.androidchess.chess;
+package com.qwezey.androidchess.logic.chess;
 
 /**
  * Represents color in the chess game

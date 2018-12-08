@@ -1,4 +1,4 @@
-package com.qwezey.androidchess.board;
+package com.qwezey.androidchess.logic.board;
 
 /**
  * Represents a coordinate for a chess board's grid

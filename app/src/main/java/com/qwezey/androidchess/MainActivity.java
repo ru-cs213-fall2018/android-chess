@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
-import com.qwezey.androidchess.board.BoardView;
-import com.qwezey.androidchess.chess.BadInputException;
-import com.qwezey.androidchess.game.Game;
+import com.qwezey.androidchess.view.BoardView;
+import com.qwezey.androidchess.logic.chess.BadInputException;
+import com.qwezey.androidchess.logic.game.Game;
 
 public class MainActivity extends Activity {
 

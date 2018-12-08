@@ -1,8 +1,8 @@
-package com.qwezey.androidchess.board;
+package com.qwezey.androidchess.logic.board;
 
-import com.qwezey.androidchess.chess.BadInputException;
-import com.qwezey.androidchess.chess.Color;
-import com.qwezey.androidchess.piece.*;
+import com.qwezey.androidchess.logic.chess.BadInputException;
+import com.qwezey.androidchess.logic.chess.Color;
+import com.qwezey.androidchess.logic.piece.*;
 
 import java.util.List;
 import java.util.function.Predicate;
