@@ -13,7 +13,8 @@ public class BoardView extends View {
 
     private Board board;
     private GridViewModel grid;
-    private Canvas canvas;
+    int boardWidth;
+    int boardHeight;
 
     public BoardView(Context context, Board board, GridViewModel grid) {
         super(context);
@@ -24,8 +25,8 @@ public class BoardView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN && canvas != null) {
-            Coordinate c = getCoordinate(event.getX(), event.getY(), canvas.getWidth(), canvas.getHeight());
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            Coordinate c = getCoordinate(event.getX(), event.getY(), boardWidth, boardHeight);
             grid.getSquare(c, board).getPaint().setColor(Color.YELLOW);
             invalidate();
             return true;
@@ -36,7 +37,8 @@ public class BoardView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        this.canvas = canvas;
+        this.boardWidth = canvas.getWidth();
+        this.boardHeight = canvas.getHeight();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square s = grid.getSquare(new Coordinate(i, j), board);
