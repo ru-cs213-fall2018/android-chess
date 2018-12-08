@@ -153,4 +153,11 @@ public class Game {
             System.out.println();
         }
     }
+
+    /**
+     * @return The board associated with this game
+     */
+    public Board getBoard() {
+        return board;
+    }
 }
