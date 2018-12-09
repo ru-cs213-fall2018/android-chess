@@ -38,6 +38,6 @@ public class BoardViewGroup extends ViewGroup {
     }
 
     private int getChildIndex(Coordinate c) {
-        return c.getY() * 8 + c.getX();
+        return c.getX() * 8 + c.getY();
     }
 }
