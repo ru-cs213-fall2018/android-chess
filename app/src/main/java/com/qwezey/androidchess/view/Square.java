@@ -1,6 +1,7 @@
 package com.qwezey.androidchess.view;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -26,7 +27,7 @@ public class Square {
         this.c = c;
     }
 
-    public void updateRect(int containerWidth, int containerHeight) {
+    public void draw(Canvas canvas, int containerWidth, int containerHeight) {
 
         int rectWidth = containerWidth / 8;
         int rectHeight = containerHeight / 8;
@@ -36,6 +37,14 @@ public class Square {
         int bottom = top + rectHeight;
 
         rect.set(left, top, right, bottom);
+
+        canvas.drawRect(getRect(), getPaint());
+
+        Paint blk = new Paint(Color.BLACK);
+        canvas.drawLine(left, top, right, top, blk);
+        canvas.drawLine(left, top, left, bottom, blk);
+        canvas.drawLine(right, top, right, bottom, blk);
+        canvas.drawLine(left, bottom, right, bottom, blk);
     }
 
     public Rect getRect() {
@@ -44,9 +53,5 @@ public class Square {
 
     public Paint getPaint() {
         return paint;
-    }
-
-    public void draw(Canvas canvas) {
-        canvas.drawRect(getRect(), getPaint());
     }
 }

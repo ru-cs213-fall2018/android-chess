@@ -36,8 +36,7 @@ public class BoardView extends View {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square s = appState.getSquare(new Coordinate(i, j));
-                s.updateRect(getWidth(), getHeight());
-                s.draw(canvas);
+                s.draw(canvas, getWidth(), getHeight());
             }
         }
     }
