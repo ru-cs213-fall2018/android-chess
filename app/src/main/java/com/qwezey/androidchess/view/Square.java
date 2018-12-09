@@ -26,10 +26,10 @@ public class Square {
         this.c = c;
     }
 
-    public void updateRect(Canvas canvas) {
+    public void updateRect(int containerWidth, int containerHeight) {
 
-        int rectWidth = canvas.getWidth() / 8;
-        int rectHeight = canvas.getHeight() / 8;
+        int rectWidth = containerWidth / 8;
+        int rectHeight = containerHeight / 8;
         int left = c.getX() * rectWidth;
         int top = (7 - c.getY()) * rectHeight;
         int right = left + rectWidth;
