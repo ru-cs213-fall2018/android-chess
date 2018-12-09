@@ -9,6 +9,7 @@ import android.view.View;
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.logic.piece.Bishop;
 import com.qwezey.androidchess.logic.piece.King;
 import com.qwezey.androidchess.logic.piece.Knight;
@@ -32,22 +33,26 @@ public class BoardView extends View {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
+            Player player = appState.getGame().getCurrentPlayer();
             Coordinate c = getCoordinate(event.getX(), event.getY(), getWidth(), getHeight());
+            Square selectedSquare = appState.getSquare(c);
             Piece piece = appState.getGame().getBoard().getSquare(c).getPiece();
+            boolean isValid = piece != null && player.getColor() == piece.getColor();
 
-            if (piece != null) {
+            BoardView.forEachCoordinate(o -> {
+                com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
+                Square displayedSquare = appState.getSquare(o);
+                if (isValid && piece.canMove(s) == null)
+                    displayedSquare.setCanMoveColor();
+                else displayedSquare.setOriginalColor();
+            });
 
-                BoardView.forEachCoordinate(o -> {
-                    com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
-                    Square displayedSquare = appState.getSquare(o);
-                    if (piece.canMove(s) == null)
-                        displayedSquare.setCanMoveColor();
-                    else displayedSquare.setOriginalColor();
-                });
 
-                invalidate();
-                return true;
-            }
+            if (isValid) selectedSquare.setValidSelectionColor();
+            else selectedSquare.setInvalidSelectionColor();
+
+            invalidate();
+            return true;
         }
 
         return false;

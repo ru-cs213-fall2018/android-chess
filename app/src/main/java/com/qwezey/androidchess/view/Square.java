@@ -88,4 +88,18 @@ public class Square {
     public void setCanMoveColor() {
         getPaint().setColor(Color.rgb(255, 252, 179));
     }
+
+    /**
+     * Indicates the square is a valid selection
+     */
+    public void setValidSelectionColor() {
+        getPaint().setColor(Color.rgb(195, 244, 205));
+    }
+
+    /**
+     * Indicates the square is in invalid selection
+     */
+    public void setInvalidSelectionColor() {
+        getPaint().setColor(Color.rgb(246, 198, 198));
+    }
 }

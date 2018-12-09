@@ -160,4 +160,11 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    /**
+     * @return The current player
+     */
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }
