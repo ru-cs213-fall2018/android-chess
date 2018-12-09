@@ -2,7 +2,6 @@ package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,7 +41,7 @@ public class BoardView extends View {
                     com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
                     Square displayedSquare = appState.getSquare(o);
                     if (piece.canMove(s) == null)
-                        displayedSquare.getPaint().setColor(Color.YELLOW);
+                        displayedSquare.setCanMoveColor();
                     else displayedSquare.setOriginalColor();
                 });
 

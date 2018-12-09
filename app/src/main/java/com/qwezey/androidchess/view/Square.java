@@ -81,4 +81,11 @@ public class Square {
                 Color.rgb(243, 209, 168) :
                 Color.rgb(216, 131, 62));
     }
+
+    /**
+     * Sets the square to a color that indicates a piece can move here
+     */
+    public void setCanMoveColor() {
+        getPaint().setColor(Color.rgb(255, 252, 179));
+    }
 }
