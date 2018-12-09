@@ -38,7 +38,7 @@ public class BoardView extends View {
 
             if (piece != null) {
 
-                BoardView.consumeEachCoordinate(o -> {
+                BoardView.forEachCoordinate(o -> {
                     com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
                     Square displayedSquare = appState.getSquare(o);
                     if (piece.canMove(s) == null)
@@ -56,7 +56,7 @@ public class BoardView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        BoardView.consumeEachCoordinate(c -> {
+        BoardView.forEachCoordinate(c -> {
             Square s = appState.getSquare(c);
             s.draw(canvas, getWidth(), getHeight(), getPiece(c));
         });
@@ -103,7 +103,7 @@ public class BoardView extends View {
      *
      * @param coordinateConsumer Gives every single coordinate
      */
-    public static void consumeEachCoordinate(Consumer<Coordinate> coordinateConsumer) {
+    public static void forEachCoordinate(Consumer<Coordinate> coordinateConsumer) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 coordinateConsumer.accept(new Coordinate(i, j));

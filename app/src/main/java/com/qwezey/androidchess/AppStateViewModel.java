@@ -30,7 +30,7 @@ public class AppStateViewModel extends ViewModel {
      */
     private void initializeGrid() {
         grid = new Square[8][8];
-        BoardView.consumeEachCoordinate(c ->
+        BoardView.forEachCoordinate(c ->
                 grid[c.getX()][c.getY()] = new Square(getGame().getBoard().getSquare(c))
         );
     }
