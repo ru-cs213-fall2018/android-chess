@@ -16,6 +16,7 @@ public class Square {
     private Paint paint;
     private Rect rect;
     private Coordinate c;
+    private int color;
 
     /**
      * @param c     The coordinate of this square in the board view
@@ -26,6 +27,7 @@ public class Square {
         paint = new Paint();
         paint.setColor(color);
         this.c = c;
+        this.color = color;
     }
 
     /**
@@ -73,5 +75,12 @@ public class Square {
      */
     public Paint getPaint() {
         return paint;
+    }
+
+    /**
+     * Sets the square to the original color
+     */
+    public void setOriginalColor() {
+        getPaint().setColor(color);
     }
 }

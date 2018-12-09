@@ -30,10 +30,26 @@ public class BoardView extends View {
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
             Coordinate c = getCoordinate(event.getX(), event.getY(), getWidth(), getHeight());
-            appState.getSquare(c).getPaint().setColor(Color.YELLOW);
-            invalidate();
-            return true;
+            Piece piece = appState.getGame().getBoard().getSquare(c).getPiece();
+
+            if (piece != null) {
+
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+
+                        Coordinate o = new Coordinate(i, j);
+                        com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
+                        Square displayedSquare = appState.getSquare(o);
+                        if (piece.canMove(s) == null) displayedSquare.getPaint().setColor(Color.YELLOW);
+                        else displayedSquare.setOriginalColor();
+                    }
+                }
+
+                invalidate();
+                return true;
+            }
         }
 
         return false;
