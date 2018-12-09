@@ -44,7 +44,8 @@ public class BoardView extends View {
                         Coordinate o = new Coordinate(i, j);
                         com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
                         Square displayedSquare = appState.getSquare(o);
-                        if (piece.canMove(s) == null) displayedSquare.getPaint().setColor(Color.YELLOW);
+                        if (piece.canMove(s) == null)
+                            displayedSquare.getPaint().setColor(Color.YELLOW);
                         else displayedSquare.setOriginalColor();
                     }
                 }
