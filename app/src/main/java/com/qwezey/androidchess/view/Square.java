@@ -86,20 +86,20 @@ public class Square {
      * Sets the square to a color that indicates a piece can move here
      */
     public void setCanMoveColor() {
-        getPaint().setColor(Color.rgb(255, 252, 179));
+        getPaint().setColor(Color.rgb(98, 140, 182));
     }
 
     /**
      * Indicates the square is a valid selection
      */
     public void setValidSelectionColor() {
-        getPaint().setColor(Color.rgb(195, 244, 205));
+        getPaint().setColor(Color.rgb(22, 139, 21));
     }
 
     /**
      * Indicates the square is in invalid selection
      */
     public void setInvalidSelectionColor() {
-        getPaint().setColor(Color.rgb(246, 198, 198));
+        getPaint().setColor(Color.rgb(235, 50, 43));
     }
 }
