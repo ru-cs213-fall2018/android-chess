@@ -28,6 +28,14 @@ public class Square {
         this.c = c;
     }
 
+    /**
+     * Draw this square on the board
+     *
+     * @param canvas          The canvas to draw on
+     * @param containerWidth  The width of the container to draw on
+     * @param containerHeight The height of the container to draw on
+     * @param piece           The chess piece to draw, can be null
+     */
     public void draw(Canvas canvas, int containerWidth, int containerHeight, VectorDrawableCompat piece) {
 
         int rectWidth = containerWidth / 8;
@@ -53,10 +61,16 @@ public class Square {
         }
     }
 
+    /**
+     * @return The rectangle on this square
+     */
     public Rect getRect() {
         return rect;
     }
 
+    /**
+     * @return The paint of this square
+     */
     public Paint getPaint() {
         return paint;
     }
