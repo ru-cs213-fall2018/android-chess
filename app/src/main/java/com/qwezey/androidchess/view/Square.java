@@ -77,6 +77,8 @@ public class Square {
      */
     public void setOriginalColor() {
         boolean isWhite = square.getColor() == com.qwezey.androidchess.logic.chess.Color.White;
-        getPaint().setColor(isWhite ? Color.WHITE : Color.GRAY);
+        getPaint().setColor(isWhite ?
+                Color.rgb(243, 209, 168) :
+                Color.rgb(216, 131, 62));
     }
 }
