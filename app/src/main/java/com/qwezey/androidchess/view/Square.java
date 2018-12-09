@@ -13,21 +13,18 @@ import com.qwezey.androidchess.logic.board.Coordinate;
  */
 public class Square {
 
+    private com.qwezey.androidchess.logic.board.Square square;
     private Paint paint;
     private Rect rect;
-    private Coordinate c;
-    private int color;
 
     /**
-     * @param c     The coordinate of this square in the board view
-     * @param color The initial color of the square
+     * @param square The corresponding square
      */
-    public Square(Coordinate c, int color) {
+    public Square(com.qwezey.androidchess.logic.board.Square square) {
+        this.square = square;
         rect = new Rect();
         paint = new Paint();
-        paint.setColor(color);
-        this.c = c;
-        this.color = color;
+        setOriginalColor();
     }
 
     /**
@@ -42,8 +39,8 @@ public class Square {
 
         int rectWidth = containerWidth / 8;
         int rectHeight = containerHeight / 8;
-        int left = c.getX() * rectWidth;
-        int top = (7 - c.getY()) * rectHeight;
+        int left = square.getCoordinate().getX() * rectWidth;
+        int top = (7 - square.getCoordinate().getY()) * rectHeight;
         int right = left + rectWidth;
         int bottom = top + rectHeight;
 
@@ -81,6 +78,7 @@ public class Square {
      * Sets the square to the original color
      */
     public void setOriginalColor() {
-        getPaint().setColor(color);
+        boolean isWhite = square.getColor() == com.qwezey.androidchess.logic.chess.Color.White;
+        getPaint().setColor(isWhite ? Color.WHITE : Color.GRAY);
     }
 }

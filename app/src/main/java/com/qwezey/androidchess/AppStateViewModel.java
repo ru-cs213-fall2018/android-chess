@@ -33,10 +33,7 @@ public class AppStateViewModel extends ViewModel {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Coordinate c = new Coordinate(i, j);
-                int color = getGame().getBoard().getSquare(c).getColor() ==
-                        com.qwezey.androidchess.logic.chess.Color.White ?
-                        Color.WHITE : Color.GRAY;
-                grid[i][j] = new Square(c, color);
+                grid[i][j] = new Square(getGame().getBoard().getSquare(c));
             }
         }
     }
