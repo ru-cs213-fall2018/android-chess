@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.graphics.drawable.VectorDrawableCompat;
 
 import com.qwezey.androidchess.logic.board.Coordinate;
 
@@ -17,7 +18,7 @@ public class Square {
     private Coordinate c;
 
     /**
-     * @param c The coordinate of this square in the board view
+     * @param c     The coordinate of this square in the board view
      * @param color The initial color of the square
      */
     public Square(Coordinate c, int color) {
@@ -27,7 +28,7 @@ public class Square {
         this.c = c;
     }
 
-    public void draw(Canvas canvas, int containerWidth, int containerHeight) {
+    public void draw(Canvas canvas, int containerWidth, int containerHeight, VectorDrawableCompat piece) {
 
         int rectWidth = containerWidth / 8;
         int rectHeight = containerHeight / 8;
@@ -45,6 +46,11 @@ public class Square {
         canvas.drawLine(left, top, left, bottom, blk);
         canvas.drawLine(right, top, right, bottom, blk);
         canvas.drawLine(left, bottom, right, bottom, blk);
+
+        if (piece != null) {
+            piece.setBounds(rect);
+            piece.draw(canvas);
+        }
     }
 
     public Rect getRect() {
