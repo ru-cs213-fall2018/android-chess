@@ -17,6 +17,8 @@ import com.qwezey.androidchess.logic.piece.Piece;
 import com.qwezey.androidchess.logic.piece.Queen;
 import com.qwezey.androidchess.logic.piece.Rook;
 
+import java.util.function.Consumer;
+
 public class BoardView extends View {
 
     private AppStateViewModel appState;
@@ -100,5 +102,18 @@ public class BoardView extends View {
             resId = isWhite ? R.drawable.white_pawn : R.drawable.black_pawn;
 
         return VectorDrawableCompat.create(getResources(), resId, null);
+    }
+
+    /**
+     * Loops through each coordinate on the board
+     *
+     * @param coordinateConsumer Gives every single coordinate
+     */
+    public static void consumeEachCoordinate(Consumer<Coordinate> coordinateConsumer) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                coordinateConsumer.accept(new Coordinate(i, j));
+            }
+        }
     }
 }
