@@ -38,17 +38,13 @@ public class BoardView extends View {
 
             if (piece != null) {
 
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 8; j++) {
-
-                        Coordinate o = new Coordinate(i, j);
-                        com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
-                        Square displayedSquare = appState.getSquare(o);
-                        if (piece.canMove(s) == null)
-                            displayedSquare.getPaint().setColor(Color.YELLOW);
-                        else displayedSquare.setOriginalColor();
-                    }
-                }
+                BoardView.consumeEachCoordinate(o -> {
+                    com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
+                    Square displayedSquare = appState.getSquare(o);
+                    if (piece.canMove(s) == null)
+                        displayedSquare.getPaint().setColor(Color.YELLOW);
+                    else displayedSquare.setOriginalColor();
+                });
 
                 invalidate();
                 return true;
@@ -60,13 +56,10 @@ public class BoardView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Coordinate c = new Coordinate(i, j);
-                Square s = appState.getSquare(c);
-                s.draw(canvas, getWidth(), getHeight(), getPiece(c));
-            }
-        }
+        BoardView.consumeEachCoordinate(c -> {
+            Square s = appState.getSquare(c);
+            s.draw(canvas, getWidth(), getHeight(), getPiece(c));
+        });
     }
 
     private Coordinate getCoordinate(float x, float y, int containerWidth, int containerHeight) {

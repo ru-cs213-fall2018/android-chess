@@ -1,11 +1,11 @@
 package com.qwezey.androidchess;
 
 import android.arch.lifecycle.ViewModel;
-import android.graphics.Color;
 
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.game.Game;
+import com.qwezey.androidchess.view.BoardView;
 import com.qwezey.androidchess.view.Square;
 
 /**
@@ -30,12 +30,9 @@ public class AppStateViewModel extends ViewModel {
      */
     private void initializeGrid() {
         grid = new Square[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Coordinate c = new Coordinate(i, j);
-                grid[i][j] = new Square(getGame().getBoard().getSquare(c));
-            }
-        }
+        BoardView.consumeEachCoordinate(c ->
+                grid[c.getX()][c.getY()] = new Square(getGame().getBoard().getSquare(c))
+        );
     }
 
     /**
