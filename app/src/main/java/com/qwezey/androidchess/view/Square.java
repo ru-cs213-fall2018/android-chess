@@ -6,8 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.graphics.drawable.VectorDrawableCompat;
 
-import com.qwezey.androidchess.logic.board.Coordinate;
-
 /**
  * A square in the board view
  */
