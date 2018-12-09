@@ -6,18 +6,16 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.qwezey.androidchess.logic.board.Board;
+import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
 
 public class BoardView extends View {
 
-    private Board board;
-    private GridViewModel grid;
+    private AppStateViewModel appState;
 
-    public BoardView(Context context, Board board, GridViewModel grid) {
+    public BoardView(Context context, AppStateViewModel appState) {
         super(context);
-        this.board = board;
-        this.grid = grid;
+        this.appState = appState;
     }
 
     @Override
@@ -25,7 +23,7 @@ public class BoardView extends View {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Coordinate c = getCoordinate(event.getX(), event.getY(), getWidth(), getHeight());
-            grid.getSquare(c, board).getPaint().setColor(Color.YELLOW);
+            appState.getSquare(c).getPaint().setColor(Color.YELLOW);
             invalidate();
             return true;
         }
@@ -37,7 +35,7 @@ public class BoardView extends View {
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Square s = grid.getSquare(new Coordinate(i, j), board);
+                Square s = appState.getSquare(new Coordinate(i, j));
                 s.updateRect(canvas);
                 s.draw(canvas);
             }

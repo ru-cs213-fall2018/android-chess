@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
-import com.qwezey.androidchess.logic.chess.BadInputException;
-import com.qwezey.androidchess.logic.game.Game;
 import com.qwezey.androidchess.view.BoardView;
-import com.qwezey.androidchess.view.GridViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,13 +22,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        try {
-            Game game = new Game();
-            GridViewModel grid = ViewModelProviders.of(this).get(GridViewModel.class);
-            setContentView(new BoardView(this, game.getBoard(), grid));
-
-        } catch (BadInputException e) {
-
-        }
+        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
+        setContentView(new BoardView(this, appState));
     }
 }
