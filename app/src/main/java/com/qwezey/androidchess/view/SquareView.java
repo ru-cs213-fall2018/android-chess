@@ -2,18 +2,13 @@ package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.support.graphics.drawable.VectorDrawableCompat;
-import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qwezey.androidchess.R;
-import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.piece.Bishop;
 import com.qwezey.androidchess.logic.piece.King;
 import com.qwezey.androidchess.logic.piece.Knight;
@@ -33,7 +28,7 @@ public class SquareView extends ViewGroup {
         Piece piece = square.getSquare().getPiece();
         if (piece != null) imageView.setImageDrawable(getPiece(piece));
 
-        this.addView(imageView, 0);
+        addView(imageView, 0);
     }
 
     @Override
