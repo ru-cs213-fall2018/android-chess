@@ -38,7 +38,7 @@ public class SquareView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        getChildAt(0).layout(left, top, right, bottom);
+        getChildAt(0).layout(0, 0, getWidth(), getHeight());
     }
 
     @Override
