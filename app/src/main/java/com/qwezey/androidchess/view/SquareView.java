@@ -77,6 +77,32 @@ public class SquareView extends ViewGroup {
     }
 
     /**
+     * Checks if you can move the piece on this to to
+     *
+     * @param to The square view to move the piece to
+     * @return true if it can move, false otherwise
+     */
+    public boolean canMovePiece(SquareView to) {
+        com.qwezey.androidchess.logic.board.Square fromSquare = getSquare().getSquare();
+        com.qwezey.androidchess.logic.board.Square toSquare = to.getSquare().getSquare();
+        return fromSquare.hasPiece() && fromSquare.getPiece().canMove(toSquare) == null;
+    }
+
+    /**
+     * Moves the piece on this square to to
+     *
+     * @param to The square to move the piece to
+     * @return true if moved, false otherwise
+     */
+    public boolean movePiece(SquareView to) {
+        if (!canMovePiece(to)) return false;
+        com.qwezey.androidchess.logic.board.Square fromSquare = getSquare().getSquare();
+        com.qwezey.androidchess.logic.board.Square toSquare = to.getSquare().getSquare();
+        fromSquare.getPiece().move(toSquare);
+        return true;
+    }
+
+    /**
      * @param piece The corresponding piece
      * @return The drawable representation of piece
      */
