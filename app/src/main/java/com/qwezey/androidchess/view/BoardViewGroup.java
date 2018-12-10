@@ -23,10 +23,8 @@ public class BoardViewGroup extends ViewGroup {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         BoardView.forEachCoordinate(c -> {
 
-            int width = right - left;
-            int height = bottom - top;
-            int rectWidth = width / 8;
-            int rectHeight = height / 8;
+            int rectWidth = getWidth() / 8;
+            int rectHeight = getHeight() / 8;
             int l = c.getX() * rectWidth;
             int t = (7 - c.getY()) * rectHeight;
             int r = l + rectWidth;
