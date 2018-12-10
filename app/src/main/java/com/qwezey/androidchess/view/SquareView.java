@@ -2,6 +2,7 @@ package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class SquareView extends ViewGroup {
             ImageView imageView = new ImageView(context);
             imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
             imageView.setOnLongClickListener(view -> {
-                view.startDragAndDrop(null, new View.DragShadowBuilder(view), null, 0);
+                view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), null, 0);
                 return true;
             });
             imageView.setOnDragListener((view, dragEvent) -> {
@@ -69,5 +70,26 @@ public class SquareView extends ViewGroup {
             resId = isWhite ? R.drawable.white_pawn : R.drawable.black_pawn;
 
         return VectorDrawableCompat.create(getResources(), resId, null);
+    }
+
+    private class BiggerDragShadowBuilder extends View.DragShadowBuilder {
+
+        public BiggerDragShadowBuilder(View view) {
+            super(view);
+        }
+
+        @Override
+        public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+            int width = getView().getWidth() * 2;
+            int height = getView().getHeight() * 2;
+            outShadowSize.set(width, height);
+            outShadowTouchPoint.set(width/2, height/2);
+        }
+
+        @Override
+        public void onDrawShadow(Canvas canvas) {
+            canvas.scale(2, 2);
+            getView().draw(canvas);
+        }
     }
 }
