@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,19 +20,41 @@ import com.qwezey.androidchess.logic.piece.Rook;
 public class SquareView extends ViewGroup {
 
     Square square;
+    ImageView imageView;
 
     public SquareView(Context context, Square square) {
         super(context);
         this.square = square;
         setWillNotDraw(false);
         if (square.getSquare().hasPiece()) {
-            ImageView imageView = new ImageView(context);
+            imageView = new ImageView(context);
             imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
             imageView.setOnLongClickListener(view -> {
                 view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), null, 0);
                 return true;
             });
             imageView.setOnDragListener((view, dragEvent) -> {
+
+                switch (dragEvent.getAction()) {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        System.out.println("started");
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        System.out.println("entered");
+                        break;
+                    case DragEvent.ACTION_DRAG_LOCATION:
+                        System.out.println("location");
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        System.out.println("exited");
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        System.out.println("drop");
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        System.out.println("ended");
+                        break;
+                }
 
                 return true;
             });
@@ -83,7 +106,7 @@ public class SquareView extends ViewGroup {
             int width = getView().getWidth() * 2;
             int height = getView().getHeight() * 2;
             outShadowSize.set(width, height);
-            outShadowTouchPoint.set(width/2, height/2);
+            outShadowTouchPoint.set(width / 2, height / 2);
         }
 
         @Override

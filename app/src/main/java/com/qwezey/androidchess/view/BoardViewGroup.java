@@ -1,6 +1,9 @@
 package com.qwezey.androidchess.view;
 
 import android.content.Context;
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
@@ -15,7 +18,17 @@ public class BoardViewGroup extends ViewGroup {
         this.appState = appState;
 
         BoardView.forEachCoordinate(c -> {
-            addView(new SquareView(context, appState.getSquare(c)), getChildIndex(c));
+
+            SquareView squareView = new SquareView(context, appState.getSquare(c));
+//            squareView.setOnTouchListener((view, motionEvent) -> {
+//                System.out.println("touch");
+//                return false;
+//            });
+//            squareView.setOnDragListener((view, dragEvent) -> {
+//                return false;
+//            });
+
+            addView(squareView , getChildIndex(c));
         });
     }
 
