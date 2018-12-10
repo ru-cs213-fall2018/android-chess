@@ -63,6 +63,20 @@ public class SquareView extends ViewGroup {
     }
 
     /**
+     * @return The image of the piece on this square, null if there is no piece
+     */
+    public ImageView getPieceView() {
+        return imageView;
+    }
+
+    /**
+     * @return True if this has a piece on it, false otherwise
+     */
+    public boolean hasPiece() {
+        return getSquare().getSquare().hasPiece();
+    }
+
+    /**
      * @param piece The corresponding piece
      * @return The drawable representation of piece
      */
