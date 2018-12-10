@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.support.graphics.drawable.VectorDrawableCompat;
-import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,45 +16,29 @@ import com.qwezey.androidchess.logic.piece.Piece;
 import com.qwezey.androidchess.logic.piece.Queen;
 import com.qwezey.androidchess.logic.piece.Rook;
 
+/**
+ * @author Ammaar Muhammad Iqbal
+ */
 public class SquareView extends ViewGroup {
 
-    Square square;
-    ImageView imageView;
+    private Square square;
+    private ImageView imageView;
 
+    /**
+     * @param context The context of the view
+     * @param square  Corresponding square
+     */
     public SquareView(Context context, Square square) {
         super(context);
         this.square = square;
         setWillNotDraw(false);
+
+        // Add piece image if the square has it
         if (square.getSquare().hasPiece()) {
             imageView = new ImageView(context);
             imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
             imageView.setOnLongClickListener(view -> {
-                view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), null, 0);
-                return true;
-            });
-            imageView.setOnDragListener((view, dragEvent) -> {
-
-                switch (dragEvent.getAction()) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        System.out.println("started");
-                        break;
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        System.out.println("entered");
-                        break;
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        System.out.println("location");
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        System.out.println("exited");
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        System.out.println("drop");
-                        break;
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        System.out.println("ended");
-                        break;
-                }
-
+                view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
                 return true;
             });
             addView(imageView, 0);
@@ -72,6 +55,17 @@ public class SquareView extends ViewGroup {
         canvas.drawPaint(square.getPaint());
     }
 
+    /**
+     * @return The corresponding square state
+     */
+    public Square getSquare() {
+        return square;
+    }
+
+    /**
+     * @param piece The corresponding piece
+     * @return The drawable representation of piece
+     */
     private VectorDrawableCompat getPiece(Piece piece) {
 
         if (piece == null) return null;
@@ -95,6 +89,9 @@ public class SquareView extends ViewGroup {
         return VectorDrawableCompat.create(getResources(), resId, null);
     }
 
+    /**
+     * Drag shadow that's 2x as big as the view
+     */
     private class BiggerDragShadowBuilder extends View.DragShadowBuilder {
 
         public BiggerDragShadowBuilder(View view) {

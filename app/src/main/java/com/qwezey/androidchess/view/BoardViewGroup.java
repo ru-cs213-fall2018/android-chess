@@ -2,33 +2,59 @@ package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
 
+/**
+ * @author Ammaar Muhammad Iqbal
+ */
 public class BoardViewGroup extends ViewGroup {
 
     AppStateViewModel appState;
 
+    /**
+     * @param context  The context for the view
+     * @param appState The state of the app
+     */
     public BoardViewGroup(Context context, AppStateViewModel appState) {
         super(context);
         this.appState = appState;
 
+        // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
-
             SquareView squareView = new SquareView(context, appState.getSquare(c));
-//            squareView.setOnTouchListener((view, motionEvent) -> {
-//                System.out.println("touch");
-//                return false;
-//            });
-//            squareView.setOnDragListener((view, dragEvent) -> {
-//                return false;
-//            });
+            squareView.setOnDragListener((view, dragEvent) -> {
 
-            addView(squareView , getChildIndex(c));
+                SquareView origin = (SquareView) dragEvent.getLocalState();
+                SquareView thisView = (SquareView) view;
+
+                switch (dragEvent.getAction()) {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        System.out.println("started");
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        System.out.println("entered");
+                        break;
+                    case DragEvent.ACTION_DRAG_LOCATION:
+                        System.out.println("location");
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        System.out.println("exited");
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        System.out.println("drop");
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        System.out.println("ended");
+                        break;
+                }
+
+                return true;
+            });
+
+            addView(squareView, getChildIndex(c));
         });
     }
 
@@ -47,6 +73,10 @@ public class BoardViewGroup extends ViewGroup {
         });
     }
 
+    /**
+     * @param c The coordinate to get the index
+     * @return The index of the child at c
+     */
     private int getChildIndex(Coordinate c) {
         return c.getX() * 8 + c.getY();
     }
