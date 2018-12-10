@@ -3,7 +3,6 @@ package com.qwezey.androidchess.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.support.graphics.drawable.VectorDrawableCompat;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,31 +23,29 @@ public class SquareView extends ViewGroup {
         super(context);
         this.square = square;
         setWillNotDraw(false);
-        ImageView imageView = new ImageView(context);
-        Piece piece = square.getSquare().getPiece();
-        if (piece != null) imageView.setImageDrawable(getPiece(piece));
+        if (square.getSquare().hasPiece()) {
+            ImageView imageView = new ImageView(context);
+            imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
+            imageView.setOnLongClickListener(view -> {
+                view.startDragAndDrop(null, new View.DragShadowBuilder(view), null, 0);
+                return true;
+            });
+            imageView.setOnDragListener((view, dragEvent) -> {
 
-        addView(imageView, 0);
+                return true;
+            });
+            addView(imageView, 0);
+        }
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        getChildAt(0).layout(0, 0, getWidth(), getHeight());
+        if (getChildCount() > 0) getChildAt(0).layout(0, 0, getWidth(), getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPaint(square.getPaint());
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            startDragAndDrop(null, new View.DragShadowBuilder(getChildAt(0)), null, 0);
-        }
-
-        return true;
     }
 
     private VectorDrawableCompat getPiece(Piece piece) {
