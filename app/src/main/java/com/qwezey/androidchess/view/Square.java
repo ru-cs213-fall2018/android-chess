@@ -59,6 +59,13 @@ public class Square {
     }
 
     /**
+     * @return The corresponding logic square
+     */
+    public com.qwezey.androidchess.logic.board.Square getSquare() {
+        return square;
+    }
+
+    /**
      * @return The rectangle on this square
      */
     public Rect getRect() {
