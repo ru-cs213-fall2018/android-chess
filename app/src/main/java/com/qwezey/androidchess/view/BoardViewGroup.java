@@ -9,7 +9,6 @@ import com.qwezey.androidchess.logic.board.Coordinate;
 public class BoardViewGroup extends ViewGroup {
 
     AppStateViewModel appState;
-    SquareView[][] grid;
 
     public BoardViewGroup(Context context, AppStateViewModel appState) {
         super(context);
