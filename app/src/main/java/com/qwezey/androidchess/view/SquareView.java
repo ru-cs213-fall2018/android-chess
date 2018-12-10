@@ -33,16 +33,14 @@ public class SquareView extends ViewGroup {
         this.square = square;
         setWillNotDraw(false);
 
-        // Add piece image if the square has it
-        if (square.getSquare().hasPiece()) {
-            imageView = new ImageView(context);
-            imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
-            imageView.setOnLongClickListener(view -> {
-                view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
-                return true;
-            });
-            addView(imageView, 0);
-        }
+        // Add image view
+        imageView = new ImageView(context);
+        imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
+        imageView.setOnLongClickListener(view -> {
+            view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
+            return true;
+        });
+        addView(imageView, 0);
     }
 
     @Override
@@ -99,6 +97,8 @@ public class SquareView extends ViewGroup {
         com.qwezey.androidchess.logic.board.Square fromSquare = getSquare().getSquare();
         com.qwezey.androidchess.logic.board.Square toSquare = to.getSquare().getSquare();
         fromSquare.getPiece().move(toSquare);
+        to.getPieceView().setImageDrawable(getPieceView().getDrawable());
+        getPieceView().setImageDrawable(null);
         return true;
     }
 

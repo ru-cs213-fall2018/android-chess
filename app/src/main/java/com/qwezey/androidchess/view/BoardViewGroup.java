@@ -32,22 +32,19 @@ public class BoardViewGroup extends ViewGroup {
 
                 switch (dragEvent.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        System.out.println("started");
+                        origin.getPieceView().setVisibility(INVISIBLE);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        System.out.println("entered");
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION:
-                        System.out.println("location");
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        System.out.println("exited");
                         break;
                     case DragEvent.ACTION_DROP:
-                        System.out.println("drop");
+                        origin.movePiece(thisView);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        System.out.println("ended");
+                        origin.getPieceView().setVisibility(VISIBLE);
                         break;
                 }
 
