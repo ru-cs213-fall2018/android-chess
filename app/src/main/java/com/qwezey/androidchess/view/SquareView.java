@@ -2,6 +2,7 @@ package com.qwezey.androidchess.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.View;
@@ -25,6 +26,7 @@ public class SquareView extends ViewGroup {
     private SquareViewState state;
     private ImageView pieceView;
     private Color currentColor;
+    private Paint borderPaint = new Paint(android.graphics.Color.BLACK);
 
     /**
      * The colors of squareViews
@@ -63,6 +65,10 @@ public class SquareView extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPaint(state.getPaint());
+        canvas.drawLine(0, 0, getWidth(), 0, borderPaint); // Top
+        canvas.drawLine(0, getHeight(), getWidth(), getHeight(), borderPaint); // Bottom
+        canvas.drawLine(0, 0, 0, getHeight(), borderPaint); // Left
+        canvas.drawLine(getWidth(), 0, getWidth(), getHeight(), borderPaint); // Right
     }
 
     /**
