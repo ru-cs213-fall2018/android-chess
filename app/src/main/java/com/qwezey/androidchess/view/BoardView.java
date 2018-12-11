@@ -26,7 +26,7 @@ public class BoardView extends ViewGroup {
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
-            SquareView squareView = new SquareView(context, appState.getSquareViewState(c));
+            SquareView squareView = new SquareView(context, appState, appState.getSquareViewState(c));
             squareView.setOnDragListener((view, dragEvent) -> {
 
                 SquareView origin = (SquareView) dragEvent.getLocalState();
@@ -39,7 +39,7 @@ public class BoardView extends ViewGroup {
                         break;
 
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        if (origin.canMovePiece(appState.getCurrentPlayer(), thisView))
+                        if (origin.canMovePiece(thisView))
                             thisView.setColor(SquareView.Color.VALID_SELECTION);
                         else thisView.setColor(SquareView.Color.INVALID_SELECTION);
                         break;
@@ -53,8 +53,8 @@ public class BoardView extends ViewGroup {
 
                     case DragEvent.ACTION_DROP:
                         setOriginalColors();
-                        if (origin.canMovePiece(appState.getCurrentPlayer(), thisView))
-                            origin.movePiece(appState.getCurrentPlayer(), thisView);
+                        if (origin.canMovePiece(thisView))
+                            origin.movePiece(thisView);
                         else return false;
                         break;
 
@@ -104,7 +104,7 @@ public class BoardView extends ViewGroup {
     private void setGuideColors(SquareView selection) {
         BoardView.forEachCoordinate(c -> {
             SquareView child = (SquareView) getChildAt(getChildIndex(c));
-            if (selection.canMovePiece(appState.getCurrentPlayer(), child))
+            if (selection.canMovePiece(child))
                 child.setColor(SquareView.Color.CAN_MOVE);
             else child.setColor(SquareView.Color.ORIGINAL);
         });

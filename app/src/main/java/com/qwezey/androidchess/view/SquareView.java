@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.R;
-import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.logic.piece.Bishop;
 import com.qwezey.androidchess.logic.piece.King;
 import com.qwezey.androidchess.logic.piece.Knight;
@@ -23,6 +23,7 @@ import com.qwezey.androidchess.logic.piece.Rook;
  */
 public class SquareView extends ViewGroup {
 
+    private AppStateViewModel appState;
     private SquareViewState state;
     private ImageView pieceView;
     private Color currentColor;
@@ -42,8 +43,9 @@ public class SquareView extends ViewGroup {
      * @param context The context of the view
      * @param state   Corresponding square
      */
-    public SquareView(Context context, SquareViewState state) {
+    public SquareView(Context context, AppStateViewModel appState, SquareViewState state) {
         super(context);
+        this.appState = appState;
         this.state = state;
         setWillNotDraw(false);
 
@@ -51,6 +53,7 @@ public class SquareView extends ViewGroup {
         pieceView = new ImageView(context);
         pieceView.setImageDrawable(getPieceDrawable(state.getPiece()));
         pieceView.setOnLongClickListener(view -> {
+            if (!hasPlayerPiece()) return false;
             view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
             return true;
         });
@@ -93,33 +96,30 @@ public class SquareView extends ViewGroup {
     }
 
     /**
-     * @param player The player who's piece is being checked
-     * @return True if this square has player's piece, false otherwise
+     * @return True if this square has the current player's piece, false otherwise
      */
-    public boolean hasPlayerPiece(Player player) {
-        return state.hasPlayerPiece(player);
+    public boolean hasPlayerPiece() {
+        return state.hasPlayerPiece(appState.getCurrentPlayer());
     }
 
     /**
-     * Checks if player can move the piece on this to to
+     * Checks if current player can move the piece on this to to
      *
-     * @param player The player moving the piece
-     * @param to     The square view to move the piece to
-     * @return true if player can move, false otherwise
+     * @param to The square view to move the piece to
+     * @return true if current player can move, false otherwise
      */
-    public boolean canMovePiece(Player player, SquareView to) {
-        return state.canMovePiece(player, to.state);
+    public boolean canMovePiece(SquareView to) {
+        return state.canMovePiece(appState.getCurrentPlayer(), to.state);
     }
 
     /**
      * Moves the piece on this square to to
      *
-     * @param player The player moving the piece
-     * @param to     The square to move the piece to
+     * @param to The square to move the piece to
      * @return true if moved, false otherwise
      */
-    public boolean movePiece(Player player, SquareView to) {
-        if (!state.movePiece(player, to.state)) return false;
+    public boolean movePiece(SquareView to) {
+        if (!state.movePiece(appState.getCurrentPlayer(), to.state)) return false;
         to.pieceView.setImageDrawable(pieceView.getDrawable());
         pieceView.setImageDrawable(null);
         return true;
