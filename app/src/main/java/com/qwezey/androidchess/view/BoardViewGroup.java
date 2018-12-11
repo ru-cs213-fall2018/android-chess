@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.board.Square;
 
 /**
  * @author Ammaar Muhammad Iqbal
@@ -33,23 +34,32 @@ public class BoardViewGroup extends ViewGroup {
                 switch (dragEvent.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
                         origin.hidePiece();
+                        setGuideColors(origin);
                         break;
+
                     case DragEvent.ACTION_DRAG_ENTERED:
                         if (origin.canMovePiece(thisView))
                             thisView.setColor(SquareView.Color.VALID_SELECTION);
                         else thisView.setColor(SquareView.Color.INVALID_SELECTION);
                         break;
+
                     case DragEvent.ACTION_DRAG_LOCATION:
                         break;
+
                     case DragEvent.ACTION_DRAG_EXITED:
-                        thisView.setColor(SquareView.Color.ORIGINAL);
+                        setGuideColors(origin);
                         break;
+
                     case DragEvent.ACTION_DROP:
-                        origin.movePiece(thisView);
+                        setOriginalColors();
+                        if (origin.canMovePiece(thisView))
+                            origin.movePiece(thisView);
+                        else return false;
                         break;
+
                     case DragEvent.ACTION_DRAG_ENDED:
-                        thisView.setColor(SquareView.Color.ORIGINAL);
                         origin.showPiece();
+                        setOriginalColors();
                         break;
                 }
 
@@ -72,6 +82,29 @@ public class BoardViewGroup extends ViewGroup {
             int b = t + rectHeight;
 
             getChildAt(getChildIndex(c)).layout(l, t, r, b);
+        });
+    }
+
+    /**
+     * Sets all squares to the original color
+     */
+    private void setOriginalColors() {
+        BoardView.forEachCoordinate(c -> {
+            SquareView child = (SquareView) getChildAt(getChildIndex(c));
+            child.setColor(SquareView.Color.ORIGINAL);
+        });
+    }
+
+    /**
+     * Highlights the squares the piece on selection can goto
+     *
+     * @param selection The selected square
+     */
+    private void setGuideColors(SquareView selection) {
+        BoardView.forEachCoordinate(c -> {
+            SquareView child = (SquareView) getChildAt(getChildIndex(c));
+            if (selection.canMovePiece(child)) child.setColor(SquareView.Color.CAN_MOVE);
+            else child.setColor(SquareView.Color.ORIGINAL);
         });
     }
 
