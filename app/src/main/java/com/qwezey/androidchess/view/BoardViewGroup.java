@@ -35,15 +35,20 @@ public class BoardViewGroup extends ViewGroup {
                         origin.hidePiece();
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
+                        if (origin.canMovePiece(thisView))
+                            thisView.setColor(SquareView.Color.VALID_SELECTION);
+                        else thisView.setColor(SquareView.Color.INVALID_SELECTION);
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION:
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
+                        thisView.setColor(SquareView.Color.ORIGINAL);
                         break;
                     case DragEvent.ACTION_DROP:
                         origin.movePiece(thisView);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
+                        thisView.setColor(SquareView.Color.ORIGINAL);
                         origin.showPiece();
                         break;
                 }
