@@ -22,7 +22,7 @@ import com.qwezey.androidchess.logic.piece.Rook;
 public class SquareView extends ViewGroup {
 
     private Square square;
-    private ImageView imageView;
+    private ImageView pieceView;
 
     /**
      * @param context The context of the view
@@ -34,13 +34,13 @@ public class SquareView extends ViewGroup {
         setWillNotDraw(false);
 
         // Add image view
-        imageView = new ImageView(context);
-        imageView.setImageDrawable(getPiece(square.getSquare().getPiece()));
-        imageView.setOnLongClickListener(view -> {
+        pieceView = new ImageView(context);
+        pieceView.setImageDrawable(getPieceDrawable(square.getSquare().getPiece()));
+        pieceView.setOnLongClickListener(view -> {
             view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
             return true;
         });
-        addView(imageView, 0);
+        addView(pieceView, 0);
     }
 
     @Override
@@ -54,24 +54,24 @@ public class SquareView extends ViewGroup {
     }
 
     /**
-     * @return The corresponding square state
+     * Hides the piece on this square
      */
-    public Square getSquare() {
-        return square;
+    public void hidePiece() {
+        pieceView.setVisibility(INVISIBLE);
     }
 
     /**
-     * @return The image of the piece on this square, null if there is no piece
+     * Shows the piece in this square
      */
-    public ImageView getPieceView() {
-        return imageView;
+    public void showPiece() {
+        pieceView.setVisibility(VISIBLE);
     }
 
     /**
      * @return True if this has a piece on it, false otherwise
      */
     public boolean hasPiece() {
-        return getSquare().getSquare().hasPiece();
+        return square.getSquare().hasPiece();
     }
 
     /**
@@ -81,8 +81,8 @@ public class SquareView extends ViewGroup {
      * @return true if it can move, false otherwise
      */
     public boolean canMovePiece(SquareView to) {
-        com.qwezey.androidchess.logic.board.Square fromSquare = getSquare().getSquare();
-        com.qwezey.androidchess.logic.board.Square toSquare = to.getSquare().getSquare();
+        com.qwezey.androidchess.logic.board.Square fromSquare = square.getSquare();
+        com.qwezey.androidchess.logic.board.Square toSquare = to.square.getSquare();
         return fromSquare.hasPiece() && fromSquare.getPiece().canMove(toSquare) == null;
     }
 
@@ -94,11 +94,11 @@ public class SquareView extends ViewGroup {
      */
     public boolean movePiece(SquareView to) {
         if (!canMovePiece(to)) return false;
-        com.qwezey.androidchess.logic.board.Square fromSquare = getSquare().getSquare();
-        com.qwezey.androidchess.logic.board.Square toSquare = to.getSquare().getSquare();
+        com.qwezey.androidchess.logic.board.Square fromSquare = square.getSquare();
+        com.qwezey.androidchess.logic.board.Square toSquare = to.square.getSquare();
         fromSquare.getPiece().move(toSquare);
-        to.getPieceView().setImageDrawable(getPieceView().getDrawable());
-        getPieceView().setImageDrawable(null);
+        to.pieceView.setImageDrawable(pieceView.getDrawable());
+        pieceView.setImageDrawable(null);
         return true;
     }
 
@@ -106,7 +106,7 @@ public class SquareView extends ViewGroup {
      * @param piece The corresponding piece
      * @return The drawable representation of piece
      */
-    private VectorDrawableCompat getPiece(Piece piece) {
+    private VectorDrawableCompat getPieceDrawable(Piece piece) {
 
         if (piece == null) return null;
         boolean isWhite = piece.getColor() == com.qwezey.androidchess.logic.chess.Color.White;

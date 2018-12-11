@@ -32,7 +32,7 @@ public class BoardViewGroup extends ViewGroup {
 
                 switch (dragEvent.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        origin.getPieceView().setVisibility(INVISIBLE);
+                        origin.hidePiece();
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
@@ -44,7 +44,7 @@ public class BoardViewGroup extends ViewGroup {
                         origin.movePiece(thisView);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        origin.getPieceView().setVisibility(VISIBLE);
+                        origin.showPiece();
                         break;
                 }
 
