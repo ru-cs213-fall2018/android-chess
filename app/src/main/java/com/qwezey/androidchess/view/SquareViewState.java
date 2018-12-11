@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.qwezey.androidchess.logic.board.Square;
+import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.logic.piece.Piece;
 
 /**
@@ -11,7 +12,7 @@ import com.qwezey.androidchess.logic.piece.Piece;
  */
 public class SquareViewState {
 
-    private com.qwezey.androidchess.logic.board.Square square;
+    private Square square;
     private Paint paint;
 
     /**
@@ -42,6 +43,15 @@ public class SquareViewState {
      */
     public boolean hasPiece() {
         return square.hasPiece();
+    }
+
+    /**
+     * @param player The player to check if
+     * @return True if player's piece is on this square, false otherwise
+     */
+    public boolean hasPlayerPiece(Player player) {
+        if (!hasPiece()) return false;
+        return square.getPiece().getColor() == player.getColor();
     }
 
     /**

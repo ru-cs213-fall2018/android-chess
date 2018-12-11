@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qwezey.androidchess.R;
+import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.logic.piece.Bishop;
 import com.qwezey.androidchess.logic.piece.King;
 import com.qwezey.androidchess.logic.piece.Knight;
@@ -72,6 +73,14 @@ public class SquareView extends ViewGroup {
      */
     public boolean hasPiece() {
         return state.hasPiece();
+    }
+
+    /**
+     * @param player The player who's piece is being checked
+     * @return True if this square has player's piece, false otherwise
+     */
+    public boolean hasPlayerPiece(Player player) {
+        return state.hasPlayerPiece(player);
     }
 
     /**
