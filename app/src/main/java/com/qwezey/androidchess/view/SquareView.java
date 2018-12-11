@@ -1,10 +1,12 @@
 package com.qwezey.androidchess.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -43,6 +45,7 @@ public class SquareView extends ViewGroup {
      * @param context The context of the view
      * @param state   Corresponding square
      */
+    @SuppressLint("ClickableViewAccessibility")
     public SquareView(Context context, AppStateViewModel appState, SquareViewState state) {
         super(context);
         this.appState = appState;
@@ -52,7 +55,8 @@ public class SquareView extends ViewGroup {
         // Add image view
         pieceView = new ImageView(context);
         pieceView.setImageDrawable(getPieceDrawable(state.getPiece()));
-        pieceView.setOnLongClickListener(view -> {
+        pieceView.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) return false;
             if (!hasPlayerPiece()) return false;
             view.startDragAndDrop(null, new BiggerDragShadowBuilder(view), this, 0);
             return true;
