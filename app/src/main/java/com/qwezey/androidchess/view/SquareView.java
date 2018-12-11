@@ -24,6 +24,7 @@ public class SquareView extends ViewGroup {
 
     private SquareViewState state;
     private ImageView pieceView;
+    private Color currentColor;
 
     /**
      * The colors of squareViews
@@ -116,8 +117,15 @@ public class SquareView extends ViewGroup {
         return true;
     }
 
+    /**
+     * Sets the color of this square if not already color
+     *
+     * @param color The color to change to
+     */
     public void setColor(Color color) {
+        if (color == currentColor) return;
         state.setColor(color);
+        this.currentColor = color;
         invalidate();
     }
 
