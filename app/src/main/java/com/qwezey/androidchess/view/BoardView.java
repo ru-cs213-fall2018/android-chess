@@ -42,7 +42,8 @@ public class BoardView extends ViewGroup {
                     case DragEvent.ACTION_DRAG_ENTERED:
                         if (origin.canMovePiece(thisView))
                             thisView.setColor(SquareView.Color.VALID_SELECTION);
-                        else thisView.setColor(SquareView.Color.INVALID_SELECTION);
+                        else if (origin != thisView)
+                            thisView.setColor(SquareView.Color.INVALID_SELECTION);
                         break;
 
                     case DragEvent.ACTION_DRAG_LOCATION:
@@ -57,8 +58,7 @@ public class BoardView extends ViewGroup {
                         if (origin.canMovePiece(thisView)) {
                             origin.movePiece(thisView);
                             appState.madeMove(origin.getCoordinate(), thisView.getCoordinate());
-                        }
-                        else return false;
+                        } else return false;
                         break;
 
                     case DragEvent.ACTION_DRAG_ENDED:
@@ -110,10 +110,15 @@ public class BoardView extends ViewGroup {
      */
     private void setGuideColors(SquareView selection) {
         BoardView.forEachCoordinate(c -> {
+
             SquareView child = (SquareView) getChildAt(getChildIndex(c));
+
             if (selection.canMovePiece(child))
                 child.setColor(SquareView.Color.CAN_MOVE);
-            else child.setColor(SquareView.Color.ORIGINAL);
+            else if (selection == child)
+                child.setColor(SquareView.Color.VALID_SELECTION);
+            else
+                child.setColor(SquareView.Color.ORIGINAL);
         });
     }
 
