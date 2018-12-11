@@ -80,7 +80,11 @@ public class BoardView extends ViewGroup {
 
             int rectWidth = getWidth() / 8;
             int rectHeight = getHeight() / 8;
-            int l = c.getX() * rectWidth;
+            int l = (
+                    appState.getCurrentPlayer().getColor() == Color.White ?
+                            c.getX() :
+                            (7 - c.getX())
+            ) * rectWidth;
             int t = (
                     appState.getCurrentPlayer().getColor() == Color.White ?
                             (7 - c.getY()) :
