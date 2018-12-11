@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.R;
+import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.piece.Bishop;
 import com.qwezey.androidchess.logic.piece.King;
 import com.qwezey.androidchess.logic.piece.Knight;
@@ -26,6 +27,7 @@ import com.qwezey.androidchess.logic.piece.Rook;
 public class SquareView extends ViewGroup {
 
     private AppStateViewModel appState;
+    private Coordinate coordinate;
     private SquareViewState state;
     private ImageView pieceView;
     private Color currentColor;
@@ -42,14 +44,15 @@ public class SquareView extends ViewGroup {
     }
 
     /**
-     * @param context The context of the view
-     * @param state   Corresponding square
+     * @param context    The context of the view
+     * @param coordinate Coordinate of this square
      */
     @SuppressLint("ClickableViewAccessibility")
-    public SquareView(Context context, AppStateViewModel appState, SquareViewState state) {
+    public SquareView(Context context, AppStateViewModel appState, Coordinate coordinate) {
         super(context);
         this.appState = appState;
-        this.state = state;
+        this.coordinate = coordinate;
+        this.state = appState.getSquareViewState(coordinate);
         setWillNotDraw(false);
 
         // Add image view
@@ -76,6 +79,13 @@ public class SquareView extends ViewGroup {
         canvas.drawLine(0, getHeight(), getWidth(), getHeight(), borderPaint); // Bottom
         canvas.drawLine(0, 0, 0, getHeight(), borderPaint); // Left
         canvas.drawLine(getWidth(), 0, getWidth(), getHeight(), borderPaint); // Right
+    }
+
+    /**
+     * @return The coordinate of this square
+     */
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     /**

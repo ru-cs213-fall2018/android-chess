@@ -2,7 +2,6 @@ package com.qwezey.androidchess;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.qwezey.androidchess.logic.board.Board;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.game.Game;
@@ -27,11 +26,14 @@ public class AppStateViewModel extends ViewModel {
     }
 
     /**
-     *
      * @return The current Player
      */
     public Player getCurrentPlayer() {
         return getGame().getCurrentPlayer();
+    }
+
+    public Game.Result madeMove(Coordinate from, Coordinate to) {
+        return getGame().madeMove(from, to);
     }
 
     /**
