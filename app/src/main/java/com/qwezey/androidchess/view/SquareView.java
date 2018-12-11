@@ -91,7 +91,10 @@ public class SquareView extends ViewGroup {
      * @return true if moved, false otherwise
      */
     public boolean movePiece(SquareView to) {
-        return state.movePiece(to.state);
+        if (!state.movePiece(to.state)) return false;
+        to.pieceView.setImageDrawable(pieceView.getDrawable());
+        pieceView.setImageDrawable(null);
+        return true;
     }
 
     /**
