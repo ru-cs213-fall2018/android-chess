@@ -2,6 +2,7 @@ package com.qwezey.androidchess;
 
 import android.arch.lifecycle.ViewModel;
 
+import com.qwezey.androidchess.logic.board.Board;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.game.Game;
@@ -20,9 +21,16 @@ public class AppStateViewModel extends ViewModel {
      * @param c The coordinate where the square is
      * @return The square that is at c
      */
-    public SquareViewState getSquare(Coordinate c) {
+    public SquareViewState getSquareViewState(Coordinate c) {
+        return getGrid()[c.getX()][c.getY()];
+    }
+
+    /**
+     * @return The square state grid
+     */
+    private SquareViewState[][] getGrid() {
         if (grid == null) initializeGrid();
-        return grid[c.getX()][c.getY()];
+        return grid;
     }
 
     /**
@@ -38,11 +46,18 @@ public class AppStateViewModel extends ViewModel {
     /**
      * @return The game
      */
-    public Game getGame() {
+    private Game getGame() {
         try {
             if (game == null) game = new Game();
         } catch (BadInputException e) {
         }
         return game;
+    }
+
+    /**
+     * @return The board
+     */
+    public Board getBoard() {
+        return getGame().getBoard();
     }
 }

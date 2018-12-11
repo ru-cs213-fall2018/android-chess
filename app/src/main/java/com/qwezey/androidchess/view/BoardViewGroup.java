@@ -24,7 +24,7 @@ public class BoardViewGroup extends ViewGroup {
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
-            SquareView squareView = new SquareView(context, appState.getSquare(c));
+            SquareView squareView = new SquareView(context, appState.getSquareViewState(c));
             squareView.setOnDragListener((view, dragEvent) -> {
 
                 SquareView origin = (SquareView) dragEvent.getLocalState();
