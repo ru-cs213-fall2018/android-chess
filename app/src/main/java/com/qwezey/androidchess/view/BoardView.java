@@ -1,106 +1,121 @@
 package com.qwezey.androidchess.view;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.DragEvent;
+import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
-import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
-import com.qwezey.androidchess.logic.game.Player;
-import com.qwezey.androidchess.logic.piece.Bishop;
-import com.qwezey.androidchess.logic.piece.King;
-import com.qwezey.androidchess.logic.piece.Knight;
-import com.qwezey.androidchess.logic.piece.Piece;
-import com.qwezey.androidchess.logic.piece.Queen;
-import com.qwezey.androidchess.logic.piece.Rook;
 
 import java.util.function.Consumer;
 
-public class BoardView extends View {
+/**
+ * @author Ammaar Muhammad Iqbal
+ */
+public class BoardView extends ViewGroup {
 
-    private AppStateViewModel appState;
+    AppStateViewModel appState;
 
+    /**
+     * @param context  The context for the view
+     * @param appState The state of the app
+     */
     public BoardView(Context context, AppStateViewModel appState) {
         super(context);
         this.appState = appState;
-    }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//
-//            Player player = appState.getGame().getCurrentPlayer();
-//            Coordinate c = getCoordinate(event.getX(), event.getY(), getWidth(), getHeight());
-//            SquareViewState selectedSquare = appState.getSquareViewState(c);
-//            Piece piece = appState.getGame().getBoard().getSquare(c).getPiece();
-//            boolean isValid = piece != null && player.getColor() == piece.getColor();
-//
-//            BoardView.forEachCoordinate(o -> {
-//                com.qwezey.androidchess.logic.board.Square s = appState.getGame().getBoard().getSquare(o);
-//                SquareViewState displayedSquare = appState.getSquareViewState(o);
-//                if (isValid && piece.canMove(s) == null)
-//                    displayedSquare.setCanMoveColor();
-//                else displayedSquare.setOriginalColor();
-//            });
-//
-//
-//            if (isValid) selectedSquare.setValidSelectionColor();
-//            else selectedSquare.setInvalidSelectionColor();
-//
-//            invalidate();
-//            return true;
-//        }
-//
-//        return false;
-//    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
+        // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
-            SquareViewState s = appState.getSquareViewState(c);
-//            s.draw(canvas, getWidth(), getHeight(), getPiece(c));
+            SquareView squareView = new SquareView(context, appState.getSquareViewState(c));
+            squareView.setOnDragListener((view, dragEvent) -> {
+
+                SquareView origin = (SquareView) dragEvent.getLocalState();
+                SquareView thisView = (SquareView) view;
+
+                switch (dragEvent.getAction()) {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        origin.hidePiece();
+                        setGuideColors(origin);
+                        break;
+
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        if (origin.canMovePiece(thisView))
+                            thisView.setColor(SquareView.Color.VALID_SELECTION);
+                        else thisView.setColor(SquareView.Color.INVALID_SELECTION);
+                        break;
+
+                    case DragEvent.ACTION_DRAG_LOCATION:
+                        break;
+
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        setGuideColors(origin);
+                        break;
+
+                    case DragEvent.ACTION_DROP:
+                        setOriginalColors();
+                        if (origin.canMovePiece(thisView))
+                            origin.movePiece(thisView);
+                        else return false;
+                        break;
+
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        origin.showPiece();
+                        setOriginalColors();
+                        break;
+                }
+
+                return true;
+            });
+
+            addView(squareView, getChildIndex(c));
         });
     }
 
-    private Coordinate getCoordinate(float x, float y, int containerWidth, int containerHeight) {
-        int rectWidth = containerWidth / 8;
-        int rectHeight = containerHeight / 8;
-        int newX = (int) x / rectWidth;
-        int newY = 7 - ((int) y / rectHeight);
-        return new Coordinate(newX, newY);
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        BoardView.forEachCoordinate(c -> {
+
+            int rectWidth = getWidth() / 8;
+            int rectHeight = getHeight() / 8;
+            int l = c.getX() * rectWidth;
+            int t = (7 - c.getY()) * rectHeight;
+            int r = l + rectWidth;
+            int b = t + rectHeight;
+
+            getChildAt(getChildIndex(c)).layout(l, t, r, b);
+        });
     }
 
-//    /**
-//     * @param c The coordinate of the piece to get
-//     * @return The vector image of the piece
-//     */
-//    private VectorDrawableCompat getPiece(Coordinate c) {
-//
-////        Piece piece = appState.getGame().getBoard().getSquare(c).getPiece();
-////        if (piece == null) return null;
-//        boolean isWhite = piece.getColor() == com.qwezey.androidchess.logic.chess.Color.White;
-//
-//        int resId;
-//
-//        if (piece instanceof King)
-//            resId = isWhite ? R.drawable.white_king : R.drawable.black_king;
-//        else if (piece instanceof Queen)
-//            resId = isWhite ? R.drawable.white_queen : R.drawable.black_queen;
-//        else if (piece instanceof Rook)
-//            resId = isWhite ? R.drawable.white_rook : R.drawable.black_rook;
-//        else if (piece instanceof Bishop)
-//            resId = isWhite ? R.drawable.white_bishop : R.drawable.black_bishop;
-//        else if (piece instanceof Knight)
-//            resId = isWhite ? R.drawable.white_knight : R.drawable.black_knight;
-//        else
-//            resId = isWhite ? R.drawable.white_pawn : R.drawable.black_pawn;
-//
-//        return VectorDrawableCompat.create(getResources(), resId, null);
-//    }
+    /**
+     * Sets all squares to the original color
+     */
+    private void setOriginalColors() {
+        BoardView.forEachCoordinate(c -> {
+            SquareView child = (SquareView) getChildAt(getChildIndex(c));
+            child.setColor(SquareView.Color.ORIGINAL);
+        });
+    }
+
+    /**
+     * Highlights the squares the piece on selection can goto
+     *
+     * @param selection The selected square
+     */
+    private void setGuideColors(SquareView selection) {
+        BoardView.forEachCoordinate(c -> {
+            SquareView child = (SquareView) getChildAt(getChildIndex(c));
+            if (selection.canMovePiece(child)) child.setColor(SquareView.Color.CAN_MOVE);
+            else child.setColor(SquareView.Color.ORIGINAL);
+        });
+    }
+
+    /**
+     * @param c The coordinate to get the index
+     * @return The index of the child at c
+     */
+    private int getChildIndex(Coordinate c) {
+        return c.getX() * 8 + c.getY();
+    }
 
     /**
      * Loops through each coordinate on the board

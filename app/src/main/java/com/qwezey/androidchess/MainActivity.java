@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.Window;
 
 import com.qwezey.androidchess.view.BoardView;
-import com.qwezey.androidchess.view.BoardViewGroup;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
-        setContentView(new BoardViewGroup(this, appState));
+        setContentView(new BoardView(this, appState));
     }
 }
