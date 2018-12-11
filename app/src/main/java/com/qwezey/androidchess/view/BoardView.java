@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.chess.Color;
 
 import java.util.function.Consumer;
 
@@ -78,7 +79,11 @@ public class BoardView extends ViewGroup {
             int rectWidth = getWidth() / 8;
             int rectHeight = getHeight() / 8;
             int l = c.getX() * rectWidth;
-            int t = (7 - c.getY()) * rectHeight;
+            int t = (
+                    appState.getCurrentPlayer().getColor() == Color.White ?
+                            (7 - c.getY()) :
+                            c.getY()
+            ) * rectHeight;
             int r = l + rectWidth;
             int b = t + rectHeight;
 
