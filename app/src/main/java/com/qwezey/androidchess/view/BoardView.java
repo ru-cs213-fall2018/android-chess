@@ -1,6 +1,7 @@
 package com.qwezey.androidchess.view;
 
 import android.content.Context;
+import android.transition.TransitionManager;
 import android.view.DragEvent;
 import android.view.ViewGroup;
 
@@ -57,6 +58,7 @@ public class BoardView extends ViewGroup {
                         setOriginalColors();
                         if (origin.canMovePiece(thisView)) {
                             origin.movePiece(thisView);
+                            TransitionManager.beginDelayedTransition(this);
                             appState.madeMove(origin.getCoordinate(), thisView.getCoordinate());
                         } else return false;
                         break;
