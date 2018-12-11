@@ -55,22 +55,25 @@ public class SquareViewState {
     }
 
     /**
-     * @param to The destination of this piece
-     * @return True if can move the piece on this square to to
+     * @param player The player who's piece is being moved
+     * @param to     The destination of this piece
+     * @return True if player can move the piece on this square to to
      */
-    public boolean canMovePiece(SquareViewState to) {
+    public boolean canMovePiece(Player player, SquareViewState to) {
         if (!square.hasPiece()) return false;
         Piece pieceToMove = square.getPiece();
         Square destination = to.square;
-        return pieceToMove.canMove(destination) == null;
+        if (pieceToMove.canMove(destination) != null) return false;
+        return !player.getKing().isInCheck(pieceToMove, destination);
     }
 
     /**
-     * @param to The destination for the piece on this square
+     * @param player The player moving the piece
+     * @param to     The destination for the piece on this square
      * @return True if the piece was moved to to, false otherwise
      */
-    public boolean movePiece(SquareViewState to) {
-        if (!canMovePiece(to)) return false;
+    public boolean movePiece(Player player, SquareViewState to) {
+        if (!canMovePiece(player, to)) return false;
         Piece pieceToMove = square.getPiece();
         Square destination = to.square;
         return pieceToMove.move(destination) == null;

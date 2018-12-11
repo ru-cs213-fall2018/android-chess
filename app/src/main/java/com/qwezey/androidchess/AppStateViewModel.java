@@ -6,6 +6,7 @@ import com.qwezey.androidchess.logic.board.Board;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.game.Game;
+import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.view.BoardView;
 import com.qwezey.androidchess.view.SquareViewState;
 
@@ -23,6 +24,14 @@ public class AppStateViewModel extends ViewModel {
      */
     public SquareViewState getSquareViewState(Coordinate c) {
         return getGrid()[c.getX()][c.getY()];
+    }
+
+    /**
+     *
+     * @return The current Player
+     */
+    public Player getCurrentPlayer() {
+        return getGame().getCurrentPlayer();
     }
 
     /**
@@ -52,12 +61,5 @@ public class AppStateViewModel extends ViewModel {
         } catch (BadInputException e) {
         }
         return game;
-    }
-
-    /**
-     * @return The board
-     */
-    public Board getBoard() {
-        return getGame().getBoard();
     }
 }

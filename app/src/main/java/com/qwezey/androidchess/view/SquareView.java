@@ -101,23 +101,25 @@ public class SquareView extends ViewGroup {
     }
 
     /**
-     * Checks if you can move the piece on this to to
+     * Checks if player can move the piece on this to to
      *
-     * @param to The square view to move the piece to
-     * @return true if it can move, false otherwise
+     * @param player The player moving the piece
+     * @param to     The square view to move the piece to
+     * @return true if player can move, false otherwise
      */
-    public boolean canMovePiece(SquareView to) {
-        return state.canMovePiece(to.state);
+    public boolean canMovePiece(Player player, SquareView to) {
+        return state.canMovePiece(player, to.state);
     }
 
     /**
      * Moves the piece on this square to to
      *
-     * @param to The square to move the piece to
+     * @param player The player moving the piece
+     * @param to     The square to move the piece to
      * @return true if moved, false otherwise
      */
-    public boolean movePiece(SquareView to) {
-        if (!state.movePiece(to.state)) return false;
+    public boolean movePiece(Player player, SquareView to) {
+        if (!state.movePiece(player, to.state)) return false;
         to.pieceView.setImageDrawable(pieceView.getDrawable());
         pieceView.setImageDrawable(null);
         return true;
