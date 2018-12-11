@@ -81,7 +81,6 @@ public class SquareView extends ViewGroup {
      * @return true if it can move, false otherwise
      */
     public boolean canMovePiece(SquareView to) {
-        if (!hasPiece()) return false;
         return state.canMovePiece(to.state);
     }
 
@@ -92,7 +91,6 @@ public class SquareView extends ViewGroup {
      * @return true if moved, false otherwise
      */
     public boolean movePiece(SquareView to) {
-        if (!canMovePiece(to)) return false;
         return state.movePiece(to.state);
     }
 
