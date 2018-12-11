@@ -26,6 +26,16 @@ public class SquareView extends ViewGroup {
     private ImageView pieceView;
 
     /**
+     * The colors of squareViews
+     */
+    public enum Color {
+        ORIGINAL,
+        CAN_MOVE,
+        VALID_SELECTION,
+        INVALID_SELECTION
+    }
+
+    /**
      * @param context The context of the view
      * @param state   Corresponding square
      */
@@ -104,6 +114,11 @@ public class SquareView extends ViewGroup {
         to.pieceView.setImageDrawable(pieceView.getDrawable());
         pieceView.setImageDrawable(null);
         return true;
+    }
+
+    public void setColor(Color color) {
+        state.setColor(color);
+        invalidate();
     }
 
     /**

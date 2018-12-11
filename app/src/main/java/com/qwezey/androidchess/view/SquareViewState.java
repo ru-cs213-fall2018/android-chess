@@ -21,7 +21,7 @@ public class SquareViewState {
     public SquareViewState(com.qwezey.androidchess.logic.board.Square square) {
         this.square = square;
         paint = new Paint();
-        setOriginalColor();
+        setColor(SquareView.Color.ORIGINAL);
     }
 
     /**
@@ -77,33 +77,36 @@ public class SquareViewState {
     }
 
     /**
-     * Sets the square to the original color
+     * Sets the color of the square
+     *
+     * @param color The color to set to
      */
-    public void setOriginalColor() {
-        boolean isWhite = square.getColor() == com.qwezey.androidchess.logic.chess.Color.White;
-        getPaint().setColor(isWhite ?
-                Color.rgb(243, 209, 168) :
-                Color.rgb(216, 131, 62));
-    }
+    public void setColor(SquareView.Color color) {
 
-    /**
-     * Sets the square to a color that indicates a piece can move here
-     */
-    public void setCanMoveColor() {
-        getPaint().setColor(Color.rgb(98, 140, 182));
-    }
+        int paintColor = 0;
 
-    /**
-     * Indicates the square is a valid selection
-     */
-    public void setValidSelectionColor() {
-        getPaint().setColor(Color.rgb(22, 139, 21));
-    }
+        switch (color) {
 
-    /**
-     * Indicates the square is in invalid selection
-     */
-    public void setInvalidSelectionColor() {
-        getPaint().setColor(Color.rgb(235, 50, 43));
+            case ORIGINAL:
+                boolean isWhite = square.getColor() == com.qwezey.androidchess.logic.chess.Color.White;
+                paintColor = isWhite ?
+                        Color.rgb(243, 209, 168) :
+                        Color.rgb(216, 131, 62);
+                break;
+
+            case CAN_MOVE:
+                paintColor = Color.rgb(98, 140, 182);
+                break;
+
+            case VALID_SELECTION:
+                paintColor = Color.rgb(22, 139, 21);
+                break;
+
+            case INVALID_SELECTION:
+                paintColor = Color.rgb(235, 50, 43);
+                break;
+        }
+
+        getPaint().setColor(paintColor);
     }
 }
