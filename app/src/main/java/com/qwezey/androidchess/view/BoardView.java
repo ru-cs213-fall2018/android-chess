@@ -1,6 +1,9 @@
 package com.qwezey.androidchess.view;
 
+import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.view.DragEvent;
 import android.view.ViewGroup;
@@ -20,11 +23,10 @@ public class BoardView extends ViewGroup {
 
     /**
      * @param context  The context for the view
-     * @param appState The state of the app
      */
-    public BoardView(Context context, AppStateViewModel appState) {
+    public BoardView(Context context) {
         super(context);
-        this.appState = appState;
+        this.appState = ViewModelProviders.of((AppCompatActivity) context).get(AppStateViewModel.class);
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {

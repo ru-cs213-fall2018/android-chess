@@ -21,8 +21,5 @@ public class MainActivity extends AppCompatActivity {
         );
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-
-        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
-        setContentView(new BoardView(this, appState));
     }
 }
