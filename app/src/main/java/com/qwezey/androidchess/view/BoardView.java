@@ -8,8 +8,10 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.qwezey.androidchess.AppStateViewModel;
+import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 
@@ -21,6 +23,7 @@ import java.util.function.Consumer;
 public class BoardView extends ViewGroup {
 
     AppStateViewModel appState;
+    AppCompatActivity activity;
 
     public BoardView(Context context, AttributeSet attrs) {
         this(context);
@@ -31,7 +34,8 @@ public class BoardView extends ViewGroup {
      */
     public BoardView(Context context) {
         super(context);
-        this.appState = ViewModelProviders.of((AppCompatActivity) context).get(AppStateViewModel.class);
+        activity = (AppCompatActivity) context;
+        this.appState = ViewModelProviders.of(activity).get(AppStateViewModel.class);
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
@@ -63,8 +67,7 @@ public class BoardView extends ViewGroup {
 
                     case DragEvent.ACTION_DROP:
                         setOriginalColors();
-                        if (origin.canMovePiece(thisView)) {
-                            origin.movePiece(thisView);
+                        if (origin.movePiece(thisView)) {
                             TransitionManager.beginDelayedTransition(this);
                             appState.madeMove(origin.getCoordinate(), thisView.getCoordinate());
                         } else return false;
@@ -85,6 +88,9 @@ public class BoardView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+        setPlayerInfo();
+        
         BoardView.forEachCoordinate(c -> {
 
             int rectWidth = getWidth() / 8;
@@ -104,6 +110,14 @@ public class BoardView extends ViewGroup {
 
             getChildAt(getChildIndex(c)).layout(l, t, r, b);
         });
+    }
+
+    /**
+     * Sets info text on who is the current player
+     */
+    private void setPlayerInfo() {
+        TextView textView = activity.findViewById(R.id.infoText);
+        textView.setText(appState.getCurrentPlayer() + "'s Turn");
     }
 
     /**
