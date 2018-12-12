@@ -37,6 +37,22 @@ public class AppStateViewModel extends ViewModel {
     }
 
     /**
+     * @return True if player can undo last move, false otherwise
+     */
+    public boolean canUndoLastMove() {
+        return getGame().canUndoLastMove();
+    }
+
+    /**
+     * Undoes last move of other player
+     *
+     * @return True if successful, false otherwise
+     */
+    public boolean undoLastMove() {
+        return getGame().undoLastMove();
+    }
+
+    /**
      * @return The square state grid
      */
     private SquareViewState[][] getGrid() {

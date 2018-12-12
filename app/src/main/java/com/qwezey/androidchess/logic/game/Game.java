@@ -21,6 +21,7 @@ public class Game {
     private Board board;
     private Player currentPlayer;
     private Player otherPlayer;
+    private Coordinate lastDestination;
 
     public enum Result {
         CHECK_MATE,
@@ -75,12 +76,32 @@ public class Game {
         if (this.otherPlayer.getKing().isInCheck())
             System.out.println(("\n" + this.otherPlayer + " is in check"));
 
-        // Swap the players
-        Player temp = this.currentPlayer;
-        this.currentPlayer = this.otherPlayer;
-        this.otherPlayer = temp;
-
+        swapPlayers();
+        lastDestination = to;
         return result;
+    }
+
+    /**
+     * @return True if player can undo last move, false otherwise
+     */
+    public boolean canUndoLastMove() {
+        if (lastDestination == null) return false;
+        Square square = board.getSquare(lastDestination);
+        if (!square.hasPiece()) return false;
+        return true;
+    }
+
+    /**
+     * Undoes the last move
+     *
+     * @return True if successful, false otherwise
+     */
+    public boolean undoLastMove() {
+        if (!canUndoLastMove()) return false;
+        Piece piece = board.getSquare(lastDestination).getPiece();
+        piece.goBack();
+        swapPlayers();
+        return true;
     }
 
     /**
@@ -95,5 +116,14 @@ public class Game {
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    /**
+     * Swap players
+     */
+    private void swapPlayers() {
+        Player temp = this.currentPlayer;
+        this.currentPlayer = this.otherPlayer;
+        this.otherPlayer = temp;
     }
 }
