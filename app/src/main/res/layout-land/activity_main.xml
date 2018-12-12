@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="73dp">
 
     <TextView
         android:id="@+id/infoText"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/boardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,9 +21,9 @@
         android:id="@+id/boardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/resignButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/autoButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoText">
 
@@ -32,44 +33,39 @@
         android:id="@+id/drawButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="DRAW"
-        app:layout_constraintBottom_toBottomOf="@+id/resignButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/resignButton"
-        app:layout_constraintTop_toTopOf="@+id/resignButton" />
+        app:layout_constraintTop_toBottomOf="@+id/resignButton" />
 
     <Button
         android:id="@+id/redoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="REDO"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/autoButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/autoButton"
+        app:layout_constraintEnd_toEndOf="@+id/autoButton"
+        app:layout_constraintStart_toStartOf="@+id/autoButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/resignButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RESIGN"
-        app:layout_constraintBottom_toBottomOf="@+id/autoButton"
-        app:layout_constraintEnd_toStartOf="@+id/drawButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/autoButton"
-        app:layout_constraintTop_toTopOf="@+id/autoButton" />
+        app:layout_constraintBottom_toTopOf="@+id/drawButton"
+        app:layout_constraintEnd_toEndOf="@+id/drawButton"
+        app:layout_constraintStart_toStartOf="@+id/drawButton"
+        app:layout_constraintTop_toBottomOf="@+id/autoButton" />
 
     <Button
         android:id="@+id/autoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AUTO"
-        app:layout_constraintBottom_toBottomOf="@+id/redoButton"
-        app:layout_constraintEnd_toStartOf="@+id/resignButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/redoButton"
-        app:layout_constraintTop_toTopOf="@+id/redoButton" />
+        app:layout_constraintBottom_toTopOf="@+id/resignButton"
+        app:layout_constraintEnd_toEndOf="@+id/resignButton"
+        app:layout_constraintStart_toStartOf="@+id/resignButton"
+        app:layout_constraintTop_toBottomOf="@+id/redoButton" />
 </android.support.constraint.ConstraintLayout>

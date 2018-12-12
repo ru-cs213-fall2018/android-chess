@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
+import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.ViewGroup;
 
@@ -21,8 +22,12 @@ public class BoardView extends ViewGroup {
 
     AppStateViewModel appState;
 
+    public BoardView(Context context, AttributeSet attrs) {
+        this(context);
+    }
+
     /**
-     * @param context  The context for the view
+     * @param context The context for the view
      */
     public BoardView(Context context) {
         super(context);
