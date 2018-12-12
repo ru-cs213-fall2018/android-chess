@@ -40,11 +40,10 @@
         app:layout_constraintTop_toTopOf="@+id/resignButton" />
 
     <Button
-        android:id="@+id/redoButton"
+        android:id="@+id/undoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="REDO"
+        android:text="UNDO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/autoButton"
         app:layout_constraintHorizontal_bias="0.5"
@@ -67,9 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AUTO"
-        app:layout_constraintBottom_toBottomOf="@+id/redoButton"
+        app:layout_constraintBottom_toBottomOf="@+id/undoButton"
         app:layout_constraintEnd_toStartOf="@+id/resignButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/redoButton"
-        app:layout_constraintTop_toTopOf="@+id/redoButton" />
+        app:layout_constraintStart_toEndOf="@+id/undoButton"
+        app:layout_constraintTop_toTopOf="@+id/undoButton" />
 </android.support.constraint.ConstraintLayout>
