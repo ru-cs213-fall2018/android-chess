@@ -25,15 +25,11 @@ public class BoardView extends ViewGroup {
     AppCompatActivity activity;
     PieceViewProvider pieceViewProvider;
 
-    public BoardView(Context context, AttributeSet attrs) {
-        this(context);
-    }
-
     /**
      * @param context The context for the view
      */
-    public BoardView(Context context) {
-        super(context);
+    public BoardView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         if (this.isInEditMode()) {
             this.setWillNotDraw(false);

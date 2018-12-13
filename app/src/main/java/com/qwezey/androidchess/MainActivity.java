@@ -3,10 +3,13 @@ package com.qwezey.androidchess;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.qwezey.androidchess.view.BoardView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,10 +29,13 @@ public class MainActivity extends AppCompatActivity {
         // Add content
         setContentView(R.layout.activity_main);
 
-        // Handle button events
+        // Handle undo button click
         AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
+        BoardView boardView = findViewById(R.id.boardView);
         Button undoButton = findViewById(R.id.undoButton);
         undoButton.setOnClickListener(button -> {
+            System.out.println(boardView);
+            TransitionManager.beginDelayedTransition(boardView);
             appState.undoLastMove();
         });
 
