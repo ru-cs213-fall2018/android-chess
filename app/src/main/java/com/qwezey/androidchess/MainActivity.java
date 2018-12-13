@@ -1,6 +1,7 @@
 package com.qwezey.androidchess;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRecordingsButtonClick(View view) {
-
+        Intent intent = new Intent(this, RecordingsActivity.class);
+        startActivity(intent);
     }
 }
