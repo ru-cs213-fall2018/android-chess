@@ -34,6 +34,17 @@ public class AppStateViewModel extends ViewModel {
         return getGame().getCurrentPlayer();
     }
 
+    /**
+     * Call when move is made to update the game
+     *
+     * @param from The start origin of the move
+     * @param to   The destination of the move
+     * @return The result of the move
+     * CHECK_MATE if the other player is now in check mate,
+     * DRAW if the other player is now in stale mate,
+     * PROMOTION if the player moved a pawn to the end,
+     * CONTINUE if nothing special happened and it's the next player's turn
+     */
     public Game.Result madeMove(Coordinate from, Coordinate to) {
         return getGame().madeMove(from, to);
     }
