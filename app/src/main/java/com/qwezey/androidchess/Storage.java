@@ -13,7 +13,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Storage {
 
@@ -21,7 +24,7 @@ public class Storage {
 
     Context context;
 
-    public  Storage(Context context) {
+    public Storage(Context context) {
         this.context = context;
     }
 
@@ -39,6 +42,25 @@ public class Storage {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    public boolean doesRecordExist(String name) {
+        File root = context.getFilesDir();
+        File recordingFolder = new File(root, recordingsName);
+        if (!recordingFolder.isDirectory()) return false;
+        File gameFile = new File(recordingFolder, name);
+        return gameFile.isFile();
+    }
+
+    public List<String> getAllRecordNames() {
+        File root = context.getFilesDir();
+        File recordingFolder = new File(root, recordingsName);
+        if (!recordingFolder.isDirectory()) return new ArrayList<>();
+        File[] files = recordingFolder.listFiles();
+        return Arrays.stream(files)
+                .map(file -> file.getName())
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public List<Coordinate> getGameRecord(String name) {
