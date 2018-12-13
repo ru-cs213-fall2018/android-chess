@@ -109,9 +109,14 @@ public class BoardView extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.isInEditMode()) {
-            Paint paint = new Paint();
-            paint.setColor(android.graphics.Color.YELLOW);
-            canvas.drawPaint(paint);
+            int squareWidth = getWidth() / 8;
+            int squareHeight = getHeight() / 8;
+            for (int i = 0; i < 9; i++) {
+                canvas.drawLine(i*squareWidth, 0, i*squareWidth, getHeight(), new Paint());
+            }
+            for (int i = 0; i < 9; i++) {
+                canvas.drawLine(0, i*squareHeight, getWidth(), i*squareHeight, new Paint());
+            }
         }
     }
 
