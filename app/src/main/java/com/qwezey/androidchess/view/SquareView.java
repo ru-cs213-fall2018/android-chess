@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -141,7 +142,9 @@ public class SquareView extends ViewGroup {
      * Updates this square's piece to match the square in logic
      */
     public void syncWithLogic() {
-        pieceView.setImageDrawable(getPieceDrawable(state.getPiece()));
+        Drawable piece = getPieceDrawable(state.getPiece());
+        if (pieceView.getDrawable() != piece)
+            pieceView.setImageDrawable(piece);
     }
 
     /**
