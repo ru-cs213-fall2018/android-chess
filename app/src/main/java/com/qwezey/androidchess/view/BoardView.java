@@ -40,7 +40,7 @@ public class BoardView extends ViewGroup {
         }
 
         activity = (AppCompatActivity) context;
-        this.appState = ViewModelProviders.of(activity).get(AppStateViewModel.class);
+        appState = ViewModelProviders.of(activity).get(AppStateViewModel.class);
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
@@ -87,6 +87,10 @@ public class BoardView extends ViewGroup {
             });
 
             addView(squareView, getChildIndex(c));
+        });
+
+        appState.addCurrentPlayerListener(player -> {
+            requestLayout();
         });
     }
 

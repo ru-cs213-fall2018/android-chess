@@ -35,8 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Handle player swap
         appState.addCurrentPlayerListener(player -> {
+
+            // Update info text
             TextView textView = findViewById(R.id.infoText);
             textView.setText(player + "'s Turn");
+
+            // Disable undo
+            undoButton.setEnabled(appState.canUndoLastMove());
         });
     }
 }
