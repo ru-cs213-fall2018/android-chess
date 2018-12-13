@@ -3,6 +3,8 @@ package com.qwezey.androidchess.view;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
@@ -34,6 +36,12 @@ public class BoardView extends ViewGroup {
      */
     public BoardView(Context context) {
         super(context);
+
+        if (this.isInEditMode()) {
+            this.setWillNotDraw(false);
+            return;
+        }
+
         activity = (AppCompatActivity) context;
         this.appState = ViewModelProviders.of(activity).get(AppStateViewModel.class);
 
@@ -86,7 +94,18 @@ public class BoardView extends ViewGroup {
     }
 
     @Override
+    protected void onDraw(Canvas canvas) {
+        if (this.isInEditMode()) {
+            Paint paint = new Paint();
+            paint.setColor(android.graphics.Color.YELLOW);
+            canvas.drawPaint(paint);
+        }
+    }
+
+    @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+        if (this.isInEditMode()) return;
 
         setPlayerInfo();
         TransitionManager.beginDelayedTransition(this);
