@@ -78,8 +78,8 @@ public class Game {
         if (this.otherPlayer.getKing().isInCheck())
             System.out.println(("\n" + this.otherPlayer + " is in check"));
 
-        swapPlayers();
         lastDestination = to;
+        swapPlayers();
 
         return result;
     }
@@ -88,6 +88,7 @@ public class Game {
      * @return True if player can undo last move, false otherwise
      */
     public boolean canUndoLastMove() {
+        System.out.println(lastDestination == null);
         if (lastDestination == null) return false;
         Square square = board.getSquare(lastDestination);
         if (!square.hasPiece()) return false;
