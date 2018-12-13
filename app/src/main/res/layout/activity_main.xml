@@ -45,6 +45,7 @@
 
     <Button
         android:id="@+id/drawButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/draw"
@@ -56,6 +57,7 @@
 
     <Button
         android:id="@+id/undoButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onUndoButtonClick"
@@ -68,6 +70,7 @@
 
     <Button
         android:id="@+id/resignButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/resign"
@@ -79,6 +82,7 @@
 
     <Button
         android:id="@+id/autoButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/auto"
