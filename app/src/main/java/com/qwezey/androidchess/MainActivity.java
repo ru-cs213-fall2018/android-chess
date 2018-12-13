@@ -44,10 +44,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUndoButtonClick(View view) {
-        System.out.println("here");
-//        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
-//        BoardView boardView = findViewById(R.id.boardView);
-//        TransitionManager.beginDelayedTransition(boardView);
-//        appState.undoLastMove();
+        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
+        BoardView boardView = findViewById(R.id.boardView);
+        TransitionManager.beginDelayedTransition(boardView);
+        appState.undoLastMove();
     }
 }
