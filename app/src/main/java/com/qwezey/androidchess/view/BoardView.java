@@ -2,8 +2,10 @@ package com.qwezey.androidchess.view;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
@@ -11,6 +13,7 @@ import android.view.DragEvent;
 import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
+import com.qwezey.androidchess.MainActivity;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.game.Game;
@@ -112,10 +115,10 @@ public class BoardView extends ViewGroup {
             int squareWidth = getWidth() / 8;
             int squareHeight = getHeight() / 8;
             for (int i = 0; i < 9; i++) {
-                canvas.drawLine(i*squareWidth, 0, i*squareWidth, getHeight(), new Paint());
+                canvas.drawLine(i * squareWidth, 0, i * squareWidth, getHeight(), new Paint());
             }
             for (int i = 0; i < 9; i++) {
-                canvas.drawLine(0, i*squareHeight, getWidth(), i*squareHeight, new Paint());
+                canvas.drawLine(0, i * squareHeight, getWidth(), i * squareHeight, new Paint());
             }
         }
     }
@@ -157,8 +160,25 @@ public class BoardView extends ViewGroup {
             case DRAW:
                 break;
             case CHECK_MATE:
+                showEndGameDialog();
                 break;
         }
+    }
+
+    private void showEndGameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(appState.getOtherPlayer() + " Wins!");
+        builder.setNegativeButton("NEW GAME", (dialogInterface, i) -> {
+        });
+        builder.setPositiveButton("SAVE RECORDING", (dialogInterface, i) -> {
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setOnDismissListener(dialogInterface -> {
+            appState.resetGame();
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+        });
+        dialog.show();
     }
 
     /**
