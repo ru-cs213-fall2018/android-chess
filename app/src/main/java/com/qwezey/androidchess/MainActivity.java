@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         BoardView boardView = findViewById(R.id.boardView);
         Button undoButton = findViewById(R.id.undoButton);
         undoButton.setOnClickListener(button -> {
-            System.out.println(boardView);
             TransitionManager.beginDelayedTransition(boardView);
             appState.undoLastMove();
         });
