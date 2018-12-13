@@ -5,11 +5,11 @@ import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.board.Square;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.chess.Color;
-import com.qwezey.androidchess.logic.chess.IllegalMoveException;
 import com.qwezey.androidchess.logic.piece.*;
 
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Represents a game
@@ -22,6 +22,7 @@ public class Game {
     private Player currentPlayer;
     private Player otherPlayer;
     private Coordinate lastDestination;
+    private List<Consumer<Result>> madeMoveListeners;
 
     public enum Result {
         CHECK_MATE,
@@ -36,9 +37,10 @@ public class Game {
      * @throws BadInputException If can't find player kings
      */
     public Game() throws BadInputException {
-        this.board = new Board();
-        this.currentPlayer = new Player(Color.White, (King) this.board.getSquare('e', 1).getPiece());
-        this.otherPlayer = new Player(Color.Black, (King) this.board.getSquare('e', 8).getPiece());
+        board = new Board();
+        currentPlayer = new Player(Color.White, (King) this.board.getSquare('e', 1).getPiece());
+        otherPlayer = new Player(Color.Black, (King) this.board.getSquare('e', 8).getPiece());
+        madeMoveListeners = new ArrayList<>();
     }
 
     /**
@@ -78,6 +80,11 @@ public class Game {
 
         swapPlayers();
         lastDestination = to;
+
+        // Return results
+        for (Consumer<Result> listener : madeMoveListeners) {
+            listener.accept(result);
+        }
         return result;
     }
 
@@ -125,5 +132,14 @@ public class Game {
         Player temp = this.currentPlayer;
         this.currentPlayer = this.otherPlayer;
         this.otherPlayer = temp;
+    }
+
+    /**
+     * Add a listener that will be provided with move results on every move
+     *
+     * @param listener The listener
+     */
+    public void addMadeMoveListener(Consumer<Result> listener) {
+        madeMoveListeners.add(listener);
     }
 }
