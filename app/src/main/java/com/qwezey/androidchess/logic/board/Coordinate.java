@@ -1,10 +1,12 @@
 package com.qwezey.androidchess.logic.board;
 
+import java.io.Serializable;
+
 /**
  * Represents a coordinate for a chess board's grid
  * @author Ammaar Muhammad Iqbal
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
 
     private int x;
     private int y;
