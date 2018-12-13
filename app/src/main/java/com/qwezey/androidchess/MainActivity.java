@@ -29,17 +29,8 @@ public class MainActivity extends AppCompatActivity {
         // Add content
         setContentView(R.layout.activity_main);
 
-        // Handle undo button click
-        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
-        BoardView boardView = findViewById(R.id.boardView);
-        Button undoButton = findViewById(R.id.undoButton);
-        undoButton.setOnClickListener(button -> {
-            System.out.println(boardView);
-            TransitionManager.beginDelayedTransition(boardView);
-            appState.undoLastMove();
-        });
-
         // Handle player swap
+        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
         appState.addCurrentPlayerListener(player -> {
 
             // Update info text
@@ -47,7 +38,16 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(player + "'s Turn");
 
             // Disable undo
+            Button undoButton = findViewById(R.id.undoButton);
             undoButton.setEnabled(appState.canUndoLastMove());
         });
+    }
+
+    public void onUndoButtonClick(View view) {
+        System.out.println("here");
+//        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
+//        BoardView boardView = findViewById(R.id.boardView);
+//        TransitionManager.beginDelayedTransition(boardView);
+//        appState.undoLastMove();
     }
 }
