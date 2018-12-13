@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
+import com.qwezey.androidchess.logic.game.Game;
 
 import java.util.function.Consumer;
 
@@ -72,7 +73,9 @@ public class BoardView extends ViewGroup {
                     case DragEvent.ACTION_DROP:
                         setOriginalColors();
                         if (origin.movePiece(thisView)) {
-                            appState.madeMove(origin.getCoordinate(), thisView.getCoordinate());
+                            Game.Result moveResult = appState
+                                    .madeMove(origin.getCoordinate(), thisView.getCoordinate());
+                            handleMadeMove(moveResult);
                         } else return false;
                         break;
 
@@ -138,6 +141,19 @@ public class BoardView extends ViewGroup {
 
             getChildAt(getChildIndex(c)).layout(l, t, r, b);
         });
+    }
+
+    private void handleMadeMove(Game.Result moveResult) {
+        switch (moveResult) {
+            case CONTINUE:
+                break;
+            case PROMOTION:
+                break;
+            case DRAW:
+                break;
+            case CHECK_MATE:
+                break;
+        }
     }
 
     /**
