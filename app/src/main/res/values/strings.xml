@@ -5,4 +5,5 @@
     <string name="undo">UNDO</string>
     <string name="resign">RESIGN</string>
     <string name="auto">AUTO</string>
+    <string name="recordingsButton">RECORDINGS</string>
 </resources>
