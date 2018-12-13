@@ -48,4 +48,8 @@ public class MainActivity extends AppCompatActivity {
         TransitionManager.beginDelayedTransition(boardView);
         appState.undoLastMove();
     }
+
+    public void onRecordingsButtonClick(View view) {
+
+    }
 }
