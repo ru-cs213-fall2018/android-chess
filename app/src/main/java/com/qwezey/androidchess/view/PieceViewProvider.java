@@ -20,11 +20,18 @@ public class PieceViewProvider {
     Context context;
     Map<Piece, ImageView> pieces;
 
+    /**
+     * @param context Context of the activity
+     */
     public PieceViewProvider(Context context) {
         this.context = context;
         pieces = new HashMap<>();
     }
 
+    /**
+     * @param piece The piece to get the associated view
+     * @return The piece view associated with piece
+     */
     public ImageView getPieceView(Piece piece) {
         if (pieces.containsKey(piece))
             return pieces.get(piece);
