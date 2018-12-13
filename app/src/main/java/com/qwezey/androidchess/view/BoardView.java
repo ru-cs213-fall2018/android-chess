@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.board.Square;
 import com.qwezey.androidchess.logic.chess.Color;
 
 import java.util.function.Consumer;
@@ -90,7 +91,16 @@ public class BoardView extends ViewGroup {
         });
 
         appState.addCurrentPlayerListener(player -> {
-            requestLayout();
+            invalidate();
+        });
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        BoardView.forEachCoordinate(c -> {
+            SquareView squareView = (SquareView) getChildAt(getChildIndex(c));
+            squareView.invalidate();
         });
     }
 
