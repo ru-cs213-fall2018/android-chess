@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android Chess</string>
+    <string name="textview">TextView</string>
+    <string name="draw">DRAW</string>
+    <string name="undo">UNDO</string>
+    <string name="resign">RESIGN</string>
+    <string name="auto">AUTO</string>
 </resources>
