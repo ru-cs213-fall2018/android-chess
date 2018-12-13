@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.logic.board.Coordinate;
-import com.qwezey.androidchess.logic.board.Square;
 import com.qwezey.androidchess.logic.chess.Color;
 
 import java.util.function.Consumer;
@@ -24,6 +23,7 @@ public class BoardView extends ViewGroup {
 
     AppStateViewModel appState;
     AppCompatActivity activity;
+    PieceViewProvider pieceViewProvider;
 
     public BoardView(Context context, AttributeSet attrs) {
         this(context);
@@ -42,10 +42,12 @@ public class BoardView extends ViewGroup {
 
         activity = (AppCompatActivity) context;
         appState = ViewModelProviders.of(activity).get(AppStateViewModel.class);
+        pieceViewProvider = new PieceViewProvider(context);
 
         // Create square views for each coordinate
         BoardView.forEachCoordinate(c -> {
-            SquareView squareView = new SquareView(context, appState, c);
+
+            SquareView squareView = new SquareView(context, appState, pieceViewProvider, c);
             squareView.setOnDragListener((view, dragEvent) -> {
 
                 SquareView origin = (SquareView) dragEvent.getLocalState();
@@ -53,7 +55,7 @@ public class BoardView extends ViewGroup {
 
                 switch (dragEvent.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        origin.hidePiece();
+                        origin.removePiece();
                         setGuideColors(origin);
                         break;
 
@@ -79,7 +81,7 @@ public class BoardView extends ViewGroup {
                         break;
 
                     case DragEvent.ACTION_DRAG_ENDED:
-                        origin.showPiece();
+                        origin.invalidate();
                         setOriginalColors();
                         break;
                 }
