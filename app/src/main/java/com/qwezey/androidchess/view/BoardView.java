@@ -68,7 +68,6 @@ public class BoardView extends ViewGroup {
                     case DragEvent.ACTION_DROP:
                         setOriginalColors();
                         if (origin.movePiece(thisView)) {
-                            TransitionManager.beginDelayedTransition(this);
                             appState.madeMove(origin.getCoordinate(), thisView.getCoordinate());
                         } else return false;
                         break;
@@ -90,6 +89,7 @@ public class BoardView extends ViewGroup {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 
         setPlayerInfo();
+        TransitionManager.beginDelayedTransition(this);
         
         BoardView.forEachCoordinate(c -> {
 

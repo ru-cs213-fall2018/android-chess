@@ -57,7 +57,6 @@ public class SquareView extends ViewGroup {
 
         // Add image view
         pieceView = new ImageView(context);
-        pieceView.setImageDrawable(getPieceDrawable(state.getPiece()));
         pieceView.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) return false;
             if (!hasPlayerPiece()) return false;
@@ -79,6 +78,7 @@ public class SquareView extends ViewGroup {
         canvas.drawLine(0, getHeight(), getWidth(), getHeight(), borderPaint); // Bottom
         canvas.drawLine(0, 0, 0, getHeight(), borderPaint); // Left
         canvas.drawLine(getWidth(), 0, getWidth(), getHeight(), borderPaint); // Right
+        syncWithLogic();
     }
 
     /**
@@ -134,9 +134,14 @@ public class SquareView extends ViewGroup {
      */
     public boolean movePiece(SquareView to) {
         if (!state.movePiece(appState.getCurrentPlayer(), to.state)) return false;
-        to.pieceView.setImageDrawable(pieceView.getDrawable());
-        pieceView.setImageDrawable(null);
         return true;
+    }
+
+    /**
+     * Updates this square's piece to match the square in logic
+     */
+    public void syncWithLogic() {
+        pieceView.setImageDrawable(getPieceDrawable(state.getPiece()));
     }
 
     /**
