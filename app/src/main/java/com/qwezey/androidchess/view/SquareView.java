@@ -81,8 +81,17 @@ public class SquareView extends ViewGroup {
     /**
      * Hides the piece on this square
      */
-    public void removePiece() {
-        removeAllViews();
+    public void hidePiece() {
+        if (pieceView != null)
+            pieceView.setVisibility(INVISIBLE);
+    }
+
+    /**
+     * Show the piece on this square
+     */
+    public void showPiece() {
+        if (pieceView != null)
+            pieceView.setVisibility(VISIBLE);
     }
 
     /**
@@ -124,13 +133,9 @@ public class SquareView extends ViewGroup {
      * Updates this square's piece to match the square in logic
      */
     public void syncWithLogic() {
-        if (state.hasPiece()) {
-            ImageView imageView = pieceViewProvider.getPieceView(state.getPiece());
-            if (pieceView == imageView) return;
-            if (pieceView != null) removeAllViews();
-            pieceView = imageView;
-            addView(pieceView);
-        } else {
+        if (state.hasPiece())
+            pieceView = pieceViewProvider.putPieceViewOnSquareView(state.getPiece(), this);
+        else {
             pieceView = null;
             removeAllViews();
         }

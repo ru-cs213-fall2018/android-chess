@@ -18,6 +18,7 @@ import java.util.Map;
 public class PieceViewProvider {
 
     Context context;
+    Map<Piece, SquareView> squares;
     Map<Piece, ImageView> pieces;
 
     /**
@@ -25,14 +26,36 @@ public class PieceViewProvider {
      */
     public PieceViewProvider(Context context) {
         this.context = context;
+        squares = new HashMap<>();
         pieces = new HashMap<>();
+    }
+
+    /**
+     * Places piece on square and removes piece from another square it is on.
+     * Sets the pieceView's visibility to visible
+     *
+     * @param piece  The corresponding piece to place
+     * @param square The square to put piece on
+     * @return The piece view corresponding with piece
+     */
+    public ImageView putPieceViewOnSquareView(Piece piece, SquareView square) {
+
+        SquareView oldParent = squares.get(piece);
+        ImageView pieceView = getPieceView(piece);
+        if (square != oldParent) {
+            if (oldParent != null) oldParent.removeAllViews();
+            square.addView(pieceView);
+            squares.put(piece, square);
+        }
+
+        return pieceView;
     }
 
     /**
      * @param piece The piece to get the associated view
      * @return The piece view associated with piece
      */
-    public ImageView getPieceView(Piece piece) {
+    private ImageView getPieceView(Piece piece) {
         if (pieces.containsKey(piece))
             return pieces.get(piece);
         else {

@@ -55,7 +55,7 @@ public class BoardView extends ViewGroup {
 
                 switch (dragEvent.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        origin.removePiece();
+                        origin.hidePiece();
                         setGuideColors(origin);
                         break;
 
@@ -81,7 +81,8 @@ public class BoardView extends ViewGroup {
                         break;
 
                     case DragEvent.ACTION_DRAG_ENDED:
-                        origin.invalidate();
+                        origin.showPiece();
+                        thisView.showPiece();
                         setOriginalColors();
                         break;
                 }
