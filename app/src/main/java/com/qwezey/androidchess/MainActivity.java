@@ -23,14 +23,17 @@ public class MainActivity extends AppCompatActivity {
         );
         getSupportActionBar().hide();
 
+        // Add content
         setContentView(R.layout.activity_main);
 
+        // Handle button events
         AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
         Button undoButton = findViewById(R.id.undoButton);
         undoButton.setOnClickListener(button -> {
             appState.undoLastMove();
         });
 
+        // Handle player swap
         appState.addCurrentPlayerListener(player -> {
             TextView textView = findViewById(R.id.infoText);
             textView.setText(player + "'s Turn");
