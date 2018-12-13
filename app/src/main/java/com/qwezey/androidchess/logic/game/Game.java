@@ -22,7 +22,7 @@ public class Game {
     private Player currentPlayer;
     private Player otherPlayer;
     private Coordinate lastDestination;
-    private List<Consumer<Result>> madeMoveListeners;
+    private List<Consumer<Player>> currentPlayerListeners;
 
     public enum Result {
         CHECK_MATE,
@@ -40,7 +40,7 @@ public class Game {
         board = new Board();
         currentPlayer = new Player(Color.White, (King) this.board.getSquare('e', 1).getPiece());
         otherPlayer = new Player(Color.Black, (King) this.board.getSquare('e', 8).getPiece());
-        madeMoveListeners = new ArrayList<>();
+        currentPlayerListeners = new ArrayList<>();
     }
 
     /**
@@ -81,10 +81,6 @@ public class Game {
         swapPlayers();
         lastDestination = to;
 
-        // Return results
-        for (Consumer<Result> listener : madeMoveListeners) {
-            listener.accept(result);
-        }
         return result;
     }
 
@@ -129,17 +125,24 @@ public class Game {
      * Swap players
      */
     private void swapPlayers() {
+
+        // Swap players
         Player temp = this.currentPlayer;
         this.currentPlayer = this.otherPlayer;
         this.otherPlayer = temp;
+
+        // Let all listeners know
+        for (Consumer<Player> listener : currentPlayerListeners)
+            listener.accept(currentPlayer);
     }
 
     /**
-     * Add a listener that will be provided with move results on every move
+     * Add a listener that will be provided the current player
      *
      * @param listener The listener
      */
-    public void addMadeMoveListener(Consumer<Result> listener) {
-        madeMoveListeners.add(listener);
+    public void addCurrentPlayerListener(Consumer<Player> listener) {
+        listener.accept(currentPlayer);
+        currentPlayerListeners.add(listener);
     }
 }

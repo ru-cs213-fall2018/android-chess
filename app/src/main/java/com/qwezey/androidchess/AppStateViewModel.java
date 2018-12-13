@@ -9,6 +9,8 @@ import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.view.BoardView;
 import com.qwezey.androidchess.view.SquareViewState;
 
+import java.util.function.Consumer;
+
 /**
  * State for the BoardView
  */
@@ -50,6 +52,15 @@ public class AppStateViewModel extends ViewModel {
      */
     public boolean undoLastMove() {
         return getGame().undoLastMove();
+    }
+
+    /**
+     * Add listener that will be proved with move results on each move
+     *
+     * @param listener The listener
+     */
+    public void addCurrentPlayerListener(Consumer<Player> listener) {
+        getGame().addCurrentPlayerListener(listener);
     }
 
     /**

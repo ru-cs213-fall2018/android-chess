@@ -1,6 +1,5 @@
 package com.qwezey.androidchess.view;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,10 +9,8 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.qwezey.androidchess.AppStateViewModel;
-import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 
@@ -107,9 +104,8 @@ public class BoardView extends ViewGroup {
 
         if (this.isInEditMode()) return;
 
-        setPlayerInfo();
         TransitionManager.beginDelayedTransition(this);
-        
+
         BoardView.forEachCoordinate(c -> {
 
             int rectWidth = getWidth() / 8;
@@ -129,14 +125,6 @@ public class BoardView extends ViewGroup {
 
             getChildAt(getChildIndex(c)).layout(l, t, r, b);
         });
-    }
-
-    /**
-     * Sets info text on who is the current player
-     */
-    private void setPlayerInfo() {
-        TextView textView = activity.findViewById(R.id.infoText);
-        textView.setText(appState.getCurrentPlayer() + "'s Turn");
     }
 
     /**

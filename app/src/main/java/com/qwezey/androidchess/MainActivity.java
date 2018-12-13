@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         Button undoButton = findViewById(R.id.undoButton);
         undoButton.setOnClickListener(button -> {
             appState.undoLastMove();
+        });
+
+        appState.addCurrentPlayerListener(player -> {
+            TextView textView = findViewById(R.id.infoText);
+            textView.setText(player + "'s Turn");
         });
     }
 }
