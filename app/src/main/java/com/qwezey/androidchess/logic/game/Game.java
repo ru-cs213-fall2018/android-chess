@@ -123,6 +123,13 @@ public class Game {
     }
 
     /**
+     * @return The other player
+     */
+    public Player getOtherPlayer() {
+        return otherPlayer;
+    }
+
+    /**
      * Swap players
      */
     private void swapPlayers() {

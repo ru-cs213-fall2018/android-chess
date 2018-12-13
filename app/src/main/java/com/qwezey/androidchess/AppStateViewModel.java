@@ -35,6 +35,13 @@ public class AppStateViewModel extends ViewModel {
     }
 
     /**
+     * @return The other player
+     */
+    public Player getOtherPlayer() {
+        return getGame().getOtherPlayer();
+    }
+
+    /**
      * Call when move is made to update the game
      *
      * @param from The start origin of the move
@@ -72,6 +79,14 @@ public class AppStateViewModel extends ViewModel {
      */
     public void addCurrentPlayerListener(Consumer<Player> listener) {
         getGame().addCurrentPlayerListener(listener);
+    }
+
+    /**
+     * Resets the game
+     */
+    public void resetGame() {
+        this.grid = null;
+        this.game = null;
     }
 
     /**
