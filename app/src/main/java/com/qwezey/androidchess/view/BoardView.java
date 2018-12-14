@@ -192,7 +192,7 @@ public class BoardView extends ViewGroup {
         }
     }
 
-    private void showEndGameDialog(boolean isDraw) {
+    public void showEndGameDialog(boolean isDraw) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 

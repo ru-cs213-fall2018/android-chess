@@ -54,4 +54,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecordingsActivity.class);
         startActivity(intent);
     }
+
+    public void onDrawButtonClick(View view) {
+        BoardView boardView = findViewById(R.id.boardView);
+        boardView.showEndGameDialog(true);
+    }
+
+    public void onResignButtonClick(View view) {
+        BoardView boardView = findViewById(R.id.boardView);
+        boardView.showEndGameDialog(false);
+    }
 }
