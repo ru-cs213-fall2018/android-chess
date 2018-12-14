@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qwezey.androidchess.AppStateViewModel;
+import com.qwezey.androidchess.MainActivity;
+import com.qwezey.androidchess.RecordActivity;
 import com.qwezey.androidchess.logic.board.Coordinate;
 
 /**
@@ -24,6 +26,7 @@ public class SquareView extends ViewGroup {
     private ImageView pieceView;
     private Color currentColor;
     private Paint borderPaint = new Paint(android.graphics.Color.BLACK);
+    private Context context;
 
     /**
      * The colors of squareViews
@@ -41,6 +44,7 @@ public class SquareView extends ViewGroup {
      */
     public SquareView(Context context, AppStateViewModel appState, PieceViewProvider pieceViewProvider, Coordinate coordinate) {
         super(context);
+        this.context = context;
         this.appState = appState;
         this.pieceViewProvider = pieceViewProvider;
         this.coordinate = coordinate;
@@ -66,6 +70,7 @@ public class SquareView extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (context instanceof RecordActivity) return super.onTouchEvent(event);
         if (event.getAction() != MotionEvent.ACTION_DOWN) return false;
         if (!hasPlayerPiece()) return false;
         startDragAndDrop(null, new SquareView.BiggerDragShadowBuilder(pieceView), this, 0);

@@ -29,6 +29,7 @@ import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.GameRecord;
 import com.qwezey.androidchess.MainActivity;
 import com.qwezey.androidchess.R;
+import com.qwezey.androidchess.RecordActivity;
 import com.qwezey.androidchess.Storage;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
@@ -72,50 +73,53 @@ public class BoardView extends ViewGroup {
         BoardView.forEachCoordinate(c -> {
 
             SquareView squareView = new SquareView(context, appState, pieceViewProvider, c);
-            squareView.setOnDragListener((view, dragEvent) -> {
 
-                SquareView origin = (SquareView) dragEvent.getLocalState();
-                SquareView thisView = (SquareView) view;
+            if (activity instanceof  MainActivity) {
+                squareView.setOnDragListener((view, dragEvent) -> {
 
-                switch (dragEvent.getAction()) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        origin.hidePiece();
-                        setGuideColors(origin);
-                        break;
+                    SquareView origin = (SquareView) dragEvent.getLocalState();
+                    SquareView thisView = (SquareView) view;
 
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        if (origin.canMovePiece(thisView))
-                            thisView.setColor(SquareView.Color.VALID_SELECTION);
-                        else if (origin != thisView)
-                            thisView.setColor(SquareView.Color.INVALID_SELECTION);
-                        break;
+                    switch (dragEvent.getAction()) {
+                        case DragEvent.ACTION_DRAG_STARTED:
+                            origin.hidePiece();
+                            setGuideColors(origin);
+                            break;
 
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        break;
+                        case DragEvent.ACTION_DRAG_ENTERED:
+                            if (origin.canMovePiece(thisView))
+                                thisView.setColor(SquareView.Color.VALID_SELECTION);
+                            else if (origin != thisView)
+                                thisView.setColor(SquareView.Color.INVALID_SELECTION);
+                            break;
 
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        setGuideColors(origin);
-                        break;
+                        case DragEvent.ACTION_DRAG_LOCATION:
+                            break;
 
-                    case DragEvent.ACTION_DROP:
-                        setOriginalColors();
-                        if (origin.movePiece(thisView)) {
-                            Coordinate from = origin.getCoordinate();
-                            Coordinate to = thisView.getCoordinate();
-                            Game.Result moveResult = appState.madeMove(from, to);
-                            handleMadeMove(moveResult, from, to);
-                        } else return false;
-                        break;
+                        case DragEvent.ACTION_DRAG_EXITED:
+                            setGuideColors(origin);
+                            break;
 
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        origin.showPiece();
-                        thisView.showPiece();
-                        setOriginalColors();
-                        break;
-                }
+                        case DragEvent.ACTION_DROP:
+                            setOriginalColors();
+                            if (origin.movePiece(thisView)) {
+                                Coordinate from = origin.getCoordinate();
+                                Coordinate to = thisView.getCoordinate();
+                                Game.Result moveResult = appState.madeMove(from, to);
+                                handleMadeMove(moveResult, from, to);
+                            } else return false;
+                            break;
 
-                return true;
-            });
+                        case DragEvent.ACTION_DRAG_ENDED:
+                            origin.showPiece();
+                            thisView.showPiece();
+                            setOriginalColors();
+                            break;
+                    }
+
+                    return true;
+                });
+            }
 
             addView(squareView, getChildIndex(c));
         });
@@ -160,12 +164,12 @@ public class BoardView extends ViewGroup {
             int rectWidth = getWidth() / 8;
             int rectHeight = getHeight() / 8;
             int l = (
-                    appState.getCurrentPlayer().getColor() == Color.White ?
+                    appState.getCurrentPlayer().getColor() == Color.White || activity instanceof RecordActivity ?
                             c.getX() :
                             (7 - c.getX())
             ) * rectWidth;
             int t = (
-                    appState.getCurrentPlayer().getColor() == Color.White ?
+                    appState.getCurrentPlayer().getColor() == Color.White || activity instanceof RecordActivity ?
                             (7 - c.getY()) :
                             c.getY()
             ) * rectHeight;
