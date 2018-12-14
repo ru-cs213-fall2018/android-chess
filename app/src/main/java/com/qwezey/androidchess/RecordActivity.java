@@ -28,7 +28,7 @@ public class RecordActivity extends AppCompatActivity {
         i = 0;
 
         AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
-        BoardView boardView = findViewById(R.id.boardView);
+        BoardView boardView = findViewById(R.id.recordView);
 
         Button previousButton = findViewById(R.id.previousButton);
         Button nextButton = findViewById(R.id.nextButton);
@@ -36,7 +36,8 @@ public class RecordActivity extends AppCompatActivity {
         previousButton.setEnabled(false);
 
         previousButton.setOnClickListener(view -> {
-            appState.undoLastMove();
+            GameRecord.Move move = moves.get(i-1);
+            appState.goBack(move.getTo());
             i--;
             nextButton.setEnabled(true);
             if (i < 1) previousButton.setEnabled(false);

@@ -117,6 +117,12 @@ public class Game {
         return true;
     }
 
+    public void goBack(Coordinate c) {
+        Piece piece = board.getSquare(c).getPiece();
+        piece.goBack();
+        swapPlayers();
+    }
+
     /**
      * @return The board associated with this game
      */

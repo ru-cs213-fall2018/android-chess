@@ -74,8 +74,12 @@ public class AppStateViewModel extends ViewModel {
      * @return True if successful, false otherwise
      */
     public boolean undoLastMove() {
-        getRecord().undoMove();
+        if (canUndoLastMove()) getRecord().undoMove();
         return getGame().undoLastMove();
+    }
+
+    public void goBack(Coordinate c) {
+        getGame().goBack(c);
     }
 
     /**
