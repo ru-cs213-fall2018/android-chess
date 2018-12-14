@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GameRecord implements Serializable {
 
-    List<Move> moves;
+    private List<Move> moves;
 
     public GameRecord() {
         moves = new ArrayList<>();
@@ -32,10 +32,14 @@ public class GameRecord implements Serializable {
         }
     }
 
+    public List<Move> getMoves() {
+        return moves;
+    }
+
     public static class Move implements Serializable {
-        Coordinate from;
-        Coordinate to;
-        PieceConstructor pieceConstructor;
+        private Coordinate from;
+        private Coordinate to;
+        private PieceConstructor pieceConstructor;
 
         public Move(Coordinate from, Coordinate to) {
             this.from = from;

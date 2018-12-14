@@ -76,6 +76,7 @@ public class RecordingsActivity extends AppCompatActivity {
             });
             recordViewHolder.getView().setOnClickListener(view -> {
                 Intent intent = new Intent(context, RecordActivity.class);
+                intent.putExtra("name", name);
                 context.startActivity(intent);
             });
         }

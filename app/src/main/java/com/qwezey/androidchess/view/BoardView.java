@@ -180,6 +180,10 @@ public class BoardView extends ViewGroup {
         });
     }
 
+    public PieceViewProvider getPieceViewProvider() {
+        return pieceViewProvider;
+    }
+
     private void handleMadeMove(Game.Result moveResult, Coordinate from, Coordinate to) {
         switch (moveResult) {
 
