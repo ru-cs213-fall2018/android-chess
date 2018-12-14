@@ -6,4 +6,5 @@
     <string name="resign">RESIGN</string>
     <string name="auto">AUTO</string>
     <string name="recordingsButton">RECORDINGS</string>
+    <string name="gameButton">GAME</string>
 </resources>
