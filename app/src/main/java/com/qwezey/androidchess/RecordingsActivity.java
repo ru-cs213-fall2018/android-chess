@@ -64,6 +64,11 @@ public class RecordingsActivity extends AppCompatActivity {
             Button b = recordViewHolder.getView().findViewById(R.id.rowDeleteButton);
             t1.setText(name);
             t2.setText(date.toString());
+            b.setOnClickListener(view -> {
+                storage.removeRecord(name);
+                recordNames = storage.getAllRecordNames();
+                notifyDataSetChanged();
+            });
 
         }
 
