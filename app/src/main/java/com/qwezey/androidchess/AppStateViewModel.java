@@ -9,8 +9,6 @@ import com.qwezey.androidchess.logic.game.Player;
 import com.qwezey.androidchess.view.BoardView;
 import com.qwezey.androidchess.view.SquareViewState;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -20,7 +18,7 @@ public class AppStateViewModel extends ViewModel {
 
     private SquareViewState[][] grid;
     private Game game;
-    private List<Coordinate> recording;
+    private GameRecord gameRecord;
 
     /**
      * @param c The coordinate where the square is
@@ -56,8 +54,6 @@ public class AppStateViewModel extends ViewModel {
      * CONTINUE if nothing special happened and it's the next player's turn
      */
     public Game.Result madeMove(Coordinate from, Coordinate to) {
-        getRecording().add(from);
-        getRecording().add(to);
         return getGame().madeMove(from, to);
     }
 
@@ -87,12 +83,11 @@ public class AppStateViewModel extends ViewModel {
     }
 
     /**
-     * @return The recording, a list of even numbered items that make pairs.
-     * In each pair, the first coordinate is the from and the second coordinate is the to
+     * @return The game record
      */
-    public List<Coordinate> getRecording() {
-        if (recording == null) recording = new ArrayList<>();
-        return recording;
+    public GameRecord getRecord() {
+        if (gameRecord == null) gameRecord = new GameRecord();
+        return gameRecord;
     }
 
     /**
@@ -101,7 +96,7 @@ public class AppStateViewModel extends ViewModel {
     public void resetGame() {
         this.grid = null;
         this.game = null;
-        this.recording = null;
+        this.gameRecord = null;
     }
 
     /**
