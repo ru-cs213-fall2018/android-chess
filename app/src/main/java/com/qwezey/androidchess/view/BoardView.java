@@ -11,10 +11,12 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.GameRecord;
 import com.qwezey.androidchess.MainActivity;
+import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.game.Game;
@@ -161,7 +163,7 @@ public class BoardView extends ViewGroup {
                 break;
 
             case PROMOTION:
-                
+
                 break;
 
             case DRAW:
@@ -170,14 +172,17 @@ public class BoardView extends ViewGroup {
 
             case CHECK_MATE:
                 appState.recordMove(new GameRecord.Move(from, to));
-                showEndGameDialog();
+                showEndGameDialog(false);
                 break;
         }
     }
 
-    private void showEndGameDialog() {
+    private void showEndGameDialog(boolean isDraw) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(appState.getOtherPlayer() + " Wins!");
+        if (isDraw) builder.setTitle("Draw");
+        else builder.setTitle(appState.getOtherPlayer() + " Wins!");
+        EditText editText = new EditText(getContext());
+        builder.setView(R.layout.dialog_save_game);
         builder.setNegativeButton("NEW GAME", (dialogInterface, i) -> {
         });
         builder.setPositiveButton("SAVE RECORDING", (dialogInterface, i) -> {
