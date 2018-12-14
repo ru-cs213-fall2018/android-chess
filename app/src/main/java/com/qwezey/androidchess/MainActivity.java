@@ -10,7 +10,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.view.BoardView;
+import com.qwezey.androidchess.view.SquareView;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,5 +67,24 @@ public class MainActivity extends AppCompatActivity {
     public void onResignButtonClick(View view) {
         BoardView boardView = findViewById(R.id.boardView);
         boardView.showEndGameDialog(false);
+    }
+
+    public void onAutoButtonClick(View view) {
+        AppStateViewModel appState = ViewModelProviders.of(this).get(AppStateViewModel.class);
+        BoardView boardView = findViewById(R.id.boardView);
+        while (true) {
+            SquareView from = (SquareView) boardView.getChildAt(boardView.getChildIndex(randomCoordinate()));
+            SquareView to = (SquareView) boardView.getChildAt(boardView.getChildIndex(randomCoordinate()));
+            if (from.hasPlayerPiece() && from.movePiece(to)) {
+                appState.madeMove(from.getCoordinate(), to.getCoordinate());
+                break;
+            }
+        }
+    }
+
+    public Coordinate randomCoordinate() {
+        int x = new Random().nextInt(8);
+        int y = new Random().nextInt(8);
+        return new Coordinate(x, y);
     }
 }

@@ -44,6 +44,7 @@ public class PieceViewProvider {
         ImageView pieceView = getPieceView(piece);
         if (square != oldParent) {
             if (oldParent != null) oldParent.removeAllViews();
+            square.removeAllViews();
             square.addView(pieceView);
             squares.put(piece, square);
         }

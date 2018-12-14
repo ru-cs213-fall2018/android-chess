@@ -317,7 +317,7 @@ public class BoardView extends ViewGroup {
      * @param c The coordinate to get the index
      * @return The index of the child at c
      */
-    private int getChildIndex(Coordinate c) {
+    public int getChildIndex(Coordinate c) {
         return c.getX() * 8 + c.getY();
     }
 
