@@ -95,7 +95,7 @@ public class AppStateViewModel extends ViewModel {
     /**
      * @return The game record
      */
-    private GameRecord getRecord() {
+    public GameRecord getRecord() {
         if (gameRecord == null) gameRecord = new GameRecord();
         return gameRecord;
     }

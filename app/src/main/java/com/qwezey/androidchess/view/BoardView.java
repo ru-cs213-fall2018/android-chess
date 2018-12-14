@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.DragEvent;
@@ -26,11 +28,13 @@ import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.GameRecord;
 import com.qwezey.androidchess.MainActivity;
 import com.qwezey.androidchess.R;
+import com.qwezey.androidchess.Storage;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.game.Game;
 import com.qwezey.androidchess.logic.game.Player;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -178,6 +182,7 @@ public class BoardView extends ViewGroup {
 
             case DRAW:
                 appState.recordMove(new GameRecord.Move(from, to));
+                showEndGameDialog(true);
                 break;
 
             case CHECK_MATE:
@@ -204,8 +209,11 @@ public class BoardView extends ViewGroup {
 
         EditText editText = saveGameView.findViewById(R.id.saveGameTextInput);
 
+        Storage storage = new Storage(activity);
+
         builder.setPositiveButton("SAVE RECORDING", (dialogInterface, i) -> {
-            String text = editText.getText().toString();
+            String text = editText.getText().toString().trim();
+            storage.recordGame(text, appState.getRecord());
         });
 
         builder.setOnDismissListener(dialogInterface -> {
@@ -215,9 +223,26 @@ public class BoardView extends ViewGroup {
         });
 
         AlertDialog dialog = builder.create();
+        dialog.show();
         Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         button.setEnabled(false);
-        dialog.show();
+
+        List<String> gameNames = storage.getAllRecordNames();
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String text = charSequence == null ? null : charSequence.toString().trim();
+                if (text == null || text.equals("") || gameNames.contains(text)) {
+                    button.setEnabled(false);
+                } else button.setEnabled(true);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
     }
 
     /**
