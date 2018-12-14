@@ -1,16 +1,25 @@
 package com.qwezey.androidchess.view;
 
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.DragEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.qwezey.androidchess.AppStateViewModel;
@@ -20,6 +29,7 @@ import com.qwezey.androidchess.R;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.game.Game;
+import com.qwezey.androidchess.logic.game.Player;
 
 import java.util.function.Consumer;
 
@@ -178,21 +188,35 @@ public class BoardView extends ViewGroup {
     }
 
     private void showEndGameDialog(boolean isDraw) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         if (isDraw) builder.setTitle("Draw");
         else builder.setTitle(appState.getOtherPlayer() + " Wins!");
-        EditText editText = new EditText(getContext());
-        builder.setView(R.layout.dialog_save_game);
+
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View saveGameView = inflater.inflate(R.layout.dialog_save_game, null);
+
+        builder.setView(saveGameView);
+
         builder.setNegativeButton("NEW GAME", (dialogInterface, i) -> {
         });
+
+        EditText editText = saveGameView.findViewById(R.id.saveGameTextInput);
+
         builder.setPositiveButton("SAVE RECORDING", (dialogInterface, i) -> {
+            String text = editText.getText().toString();
         });
-        AlertDialog dialog = builder.create();
-        dialog.setOnDismissListener(dialogInterface -> {
+
+        builder.setOnDismissListener(dialogInterface -> {
             appState.resetGame();
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
         });
+
+        AlertDialog dialog = builder.create();
+        Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        button.setEnabled(false);
         dialog.show();
     }
 
