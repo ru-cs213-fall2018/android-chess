@@ -2,13 +2,17 @@ package com.qwezey.androidchess;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.view.BoardView;
@@ -54,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
         appState.undoLastMove();
     }
 
-    public void onRecordingsButtonClick(View view) {
-        Intent intent = new Intent(this, RecordingsActivity.class);
-        startActivity(intent);
-    }
-
     public void onDrawButtonClick(View view) {
         BoardView boardView = findViewById(R.id.boardView);
         boardView.showEndGameDialog(true);
@@ -86,5 +85,22 @@ public class MainActivity extends AppCompatActivity {
         int x = new Random().nextInt(8);
         int y = new Random().nextInt(8);
         return new Coordinate(x, y);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("Recordings");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.toString()) {
+            case "Recordings":
+                Intent intent = new Intent(this, RecordingsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
     }
 }
