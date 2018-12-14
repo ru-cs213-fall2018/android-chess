@@ -20,7 +20,10 @@
         </activity>
         <activity
             android:name=".RecordingsActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
+        <activity
+            android:name=".RecordActivity"
+            android:parentActivityName=".RecordActivity"></activity>
     </application>
 
 </manifest>

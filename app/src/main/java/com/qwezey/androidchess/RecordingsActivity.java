@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -74,7 +75,8 @@ public class RecordingsActivity extends AppCompatActivity {
                 notifyDataSetChanged();
             });
             recordViewHolder.getView().setOnClickListener(view -> {
-                
+                Intent intent = new Intent(context, RecordActivity.class);
+                context.startActivity(intent);
             });
         }
 
