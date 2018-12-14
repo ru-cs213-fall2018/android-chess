@@ -51,6 +51,11 @@ public class PieceViewProvider {
         return pieceView;
     }
 
+    public void removePiece(Piece piece) {
+        pieces.remove(piece);
+        squares.remove(piece);
+    }
+
     /**
      * @param piece The piece to get the associated view
      * @return The piece view associated with piece

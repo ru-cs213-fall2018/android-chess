@@ -42,10 +42,10 @@ public class GameRecord implements Serializable {
             this.to = to;
         }
 
-        public Move(Coordinate from, Coordinate to, Piece piece) {
+        public Move(Coordinate from, Coordinate to, PieceConstructor pieceConstructor) {
             this.from = from;
             this.to = to;
-            this.setPieceConstructor(piece);
+            this.pieceConstructor = pieceConstructor;
         }
 
         public Coordinate getFrom() {
@@ -58,16 +58,6 @@ public class GameRecord implements Serializable {
 
         public PieceConstructor getPieceConstructor() {
             return pieceConstructor;
-        }
-
-        private void setPieceConstructor(Piece piece) {
-            if (piece == null) pieceConstructor = null;
-            else if (piece instanceof Pawn) pieceConstructor = Pawn::new;
-            else if (piece instanceof Rook) pieceConstructor = Rook::new;
-            else if (piece instanceof Knight) pieceConstructor = Knight::new;
-            else if (piece instanceof Bishop) pieceConstructor = Bishop::new;
-            else if (piece instanceof Queen) pieceConstructor = Queen::new;
-            else if (piece instanceof King) pieceConstructor = King::new;
         }
     }
 }

@@ -6,6 +6,8 @@ import com.qwezey.androidchess.logic.board.Square;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.piece.*;
+import com.qwezey.androidchess.view.PieceViewProvider;
+import com.qwezey.androidchess.view.SquareView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,13 @@ public class Game {
         swapPlayers();
 
         return result;
+    }
+
+    public void promoteLastDestination(PieceConstructor constructor, PieceViewProvider pieceViewProvider, SquareView sv) {
+        Square square = board.getSquare(lastDestination);
+        pieceViewProvider.removePiece(square.getPiece());
+        square.setPiece(constructor.construct(board, square, otherPlayer.getColor()));
+        pieceViewProvider.putPieceViewOnSquareView(square.getPiece(), sv);
     }
 
     /**

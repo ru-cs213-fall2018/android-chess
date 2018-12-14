@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import com.qwezey.androidchess.AppStateViewModel;
 import com.qwezey.androidchess.GameRecord;
@@ -33,6 +34,12 @@ import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
 import com.qwezey.androidchess.logic.game.Game;
 import com.qwezey.androidchess.logic.game.Player;
+import com.qwezey.androidchess.logic.piece.Bishop;
+import com.qwezey.androidchess.logic.piece.Knight;
+import com.qwezey.androidchess.logic.piece.Piece;
+import com.qwezey.androidchess.logic.piece.PieceConstructor;
+import com.qwezey.androidchess.logic.piece.Queen;
+import com.qwezey.androidchess.logic.piece.Rook;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -177,7 +184,12 @@ public class BoardView extends ViewGroup {
                 break;
 
             case PROMOTION:
-
+                showPickPromotionDialog(pieceConstructor -> {
+                    appState.recordMove(new GameRecord.Move(from, to, pieceConstructor));
+                    SquareView sv = (SquareView) getChildAt(getChildIndex(to));
+                    appState.promoteLastDestination(pieceConstructor, pieceViewProvider, sv);
+                    sv.syncWithLogic();
+                });
                 break;
 
             case DRAW:
@@ -190,6 +202,31 @@ public class BoardView extends ViewGroup {
                 showEndGameDialog(false);
                 break;
         }
+    }
+
+    public void showPickPromotionDialog(Consumer<PieceConstructor> pieceConsumer) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Promotion");
+        String[] some = {"Queen", "Rook", "Bishop", "Knight"};
+        builder.setCancelable(false);
+        builder.setItems(some, ((dialogInterface, i) -> {
+            switch (i) {
+                case 0:
+                    pieceConsumer.accept(Queen::new);
+                    break;
+                case 1:
+                    pieceConsumer.accept(Rook::new);
+                    break;
+                case 2:
+                    pieceConsumer.accept(Bishop::new);
+                    break;
+                case 3:
+                    pieceConsumer.accept(Knight::new);
+                    break;
+            }
+        }));
+        builder.show();
     }
 
     public void showEndGameDialog(boolean isDraw) {
@@ -230,7 +267,8 @@ public class BoardView extends ViewGroup {
         List<String> gameNames = storage.getAllRecordNames();
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -241,7 +279,8 @@ public class BoardView extends ViewGroup {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {
+            }
         });
     }
 

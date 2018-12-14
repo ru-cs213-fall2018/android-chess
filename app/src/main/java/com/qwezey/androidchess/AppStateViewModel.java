@@ -3,10 +3,14 @@ package com.qwezey.androidchess;
 import android.arch.lifecycle.ViewModel;
 
 import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.board.Square;
 import com.qwezey.androidchess.logic.chess.BadInputException;
 import com.qwezey.androidchess.logic.game.Game;
 import com.qwezey.androidchess.logic.game.Player;
+import com.qwezey.androidchess.logic.piece.PieceConstructor;
 import com.qwezey.androidchess.view.BoardView;
+import com.qwezey.androidchess.view.PieceViewProvider;
+import com.qwezey.androidchess.view.SquareView;
 import com.qwezey.androidchess.view.SquareViewState;
 
 import java.util.function.Consumer;
@@ -107,6 +111,10 @@ public class AppStateViewModel extends ViewModel {
         this.grid = null;
         this.game = null;
         this.gameRecord = null;
+    }
+
+    public void promoteLastDestination(PieceConstructor constructor, PieceViewProvider pieceViewProvider, SquareView sv) {
+        getGame().promoteLastDestination(constructor, pieceViewProvider, sv);
     }
 
     /**
