@@ -79,4 +79,12 @@ public class Storage {
             throw new UncheckedIOException((IOException) e);
         }
     }
+
+    public void removeRecord(String name) {
+        File root = context.getFilesDir();
+        File recordingFolder = new File(root, recordingsName);
+        if (!recordingFolder.isDirectory()) recordingFolder.mkdir();
+        File gameFile = new File(recordingFolder, name);
+        gameFile.delete();
+    }
 }
