@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.time.LocalDateTime;
@@ -49,14 +51,20 @@ public class RecordingsActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecordViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            return new RecordViewHolder(new TextView(context));
+            View view = LayoutInflater.from(context).inflate(R.layout.records_row, viewGroup, false);
+            return new RecordViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecordViewHolder recordViewHolder, int i) {
             String name = recordNames.get(i);
             LocalDateTime date = storage.getRecordTime(name);
-            recordViewHolder.getTextView().setText(name + " " + date.toString());
+            TextView t1 = recordViewHolder.getView().findViewById(R.id.rowNameButton);
+            TextView t2 = recordViewHolder.getView().findViewById(R.id.rowDate);
+            Button b = recordViewHolder.getView().findViewById(R.id.rowDeleteButton);
+            t1.setText(name);
+            t2.setText(date.toString());
+
         }
 
         @Override
@@ -67,15 +75,15 @@ public class RecordingsActivity extends AppCompatActivity {
 
     public class RecordViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        View view;
 
-        public RecordViewHolder(TextView view) {
+        public RecordViewHolder(View view) {
             super(view);
-            textView = view;
+            this.view = view;
         }
 
-        public TextView getTextView() {
-            return textView;
+        public View getView() {
+            return view;
         }
     }
 }
