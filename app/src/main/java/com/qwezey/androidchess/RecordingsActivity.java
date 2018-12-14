@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RecordingsActivity extends AppCompatActivity {
@@ -37,9 +38,10 @@ public class RecordingsActivity extends AppCompatActivity {
 
         Context context;
         List<String> recordNames;
+        Storage storage;
 
         public RecordAdapter(Context context) {
-            Storage storage = new Storage(context);
+            storage = new Storage(context);
             this.context = context;
             recordNames = storage.getAllRecordNames();
         }
@@ -52,7 +54,9 @@ public class RecordingsActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecordViewHolder recordViewHolder, int i) {
-            recordViewHolder.getTextView().setText(recordNames.get(i));
+            String name = recordNames.get(i);
+            LocalDateTime date = storage.getRecordTime(name);
+            recordViewHolder.getTextView().setText(name + " " + date.toString());
         }
 
         @Override

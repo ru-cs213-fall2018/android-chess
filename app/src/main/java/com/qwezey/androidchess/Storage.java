@@ -13,6 +13,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,6 +81,15 @@ public class Storage {
         } catch (Exception e) {
             throw new UncheckedIOException((IOException) e);
         }
+    }
+
+    public LocalDateTime getRecordTime(String name) {
+        File root = context.getFilesDir();
+        File recordingFolder = new File(root, recordingsName);
+        if (!recordingFolder.isDirectory()) recordingFolder.mkdir();
+        File gameFile = new File(recordingFolder, name);
+        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(gameFile.lastModified()), ZoneId.systemDefault());
+        return date;
     }
 
     public void removeRecord(String name) {
