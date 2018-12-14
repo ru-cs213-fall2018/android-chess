@@ -2,7 +2,7 @@ package com.qwezey.androidchess;
 
 import android.content.Context;
 
-import com.qwezey.androidchess.logic.board.Coordinate;
+import com.qwezey.androidchess.logic.game.Game;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +28,7 @@ public class Storage {
         this.context = context;
     }
 
-    public void recordGame(String name, List<Coordinate> record) {
+    public void recordGame(String name, GameRecord record) {
         try {
             File root = context.getFilesDir();
             File recordingFolder = new File(root, recordingsName);
@@ -63,7 +63,7 @@ public class Storage {
                 .collect(Collectors.toList());
     }
 
-    public List<Coordinate> getGameRecord(String name) {
+    public GameRecord getGameRecord(String name) {
         try {
             File root = context.getFilesDir();
             File recordingFolder = new File(root, recordingsName);
@@ -71,7 +71,7 @@ public class Storage {
             File gameFile = new File(recordingFolder, name);
             InputStream is = new FileInputStream(gameFile);
             ObjectInputStream ois = new ObjectInputStream(is);
-            List<Coordinate> record = (List<Coordinate>) ois.readObject();
+            GameRecord record = (GameRecord) ois.readObject();
             ois.close();
             is.close();
             return record;
