@@ -73,7 +73,9 @@ public class RecordingsActivity extends AppCompatActivity {
                 recordNames = storage.getAllRecordNames();
                 notifyDataSetChanged();
             });
-
+            recordViewHolder.getView().setOnClickListener(view -> {
+                
+            });
         }
 
         @Override
