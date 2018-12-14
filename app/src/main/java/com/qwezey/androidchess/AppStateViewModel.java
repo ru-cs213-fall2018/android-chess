@@ -70,6 +70,7 @@ public class AppStateViewModel extends ViewModel {
      * @return True if successful, false otherwise
      */
     public boolean undoLastMove() {
+        getRecord().undoMove();
         return getGame().undoLastMove();
     }
 
@@ -83,9 +84,18 @@ public class AppStateViewModel extends ViewModel {
     }
 
     /**
+     * Records a move
+     *
+     * @param move The move to record
+     */
+    public void recordMove(GameRecord.Move move) {
+        getRecord().addMove(move);
+    }
+
+    /**
      * @return The game record
      */
-    public GameRecord getRecord() {
+    private GameRecord getRecord() {
         if (gameRecord == null) gameRecord = new GameRecord();
         return gameRecord;
     }

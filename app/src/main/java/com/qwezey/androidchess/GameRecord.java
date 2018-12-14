@@ -32,7 +32,7 @@ public class GameRecord implements Serializable {
         }
     }
 
-    public class Move implements Serializable {
+    public static class Move implements Serializable {
         Coordinate from;
         Coordinate to;
         PieceConstructor pieceConstructor;

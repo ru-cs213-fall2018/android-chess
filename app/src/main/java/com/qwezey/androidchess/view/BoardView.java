@@ -13,6 +13,7 @@ import android.view.DragEvent;
 import android.view.ViewGroup;
 
 import com.qwezey.androidchess.AppStateViewModel;
+import com.qwezey.androidchess.GameRecord;
 import com.qwezey.androidchess.MainActivity;
 import com.qwezey.androidchess.logic.board.Coordinate;
 import com.qwezey.androidchess.logic.chess.Color;
@@ -76,9 +77,10 @@ public class BoardView extends ViewGroup {
                     case DragEvent.ACTION_DROP:
                         setOriginalColors();
                         if (origin.movePiece(thisView)) {
-                            Game.Result moveResult = appState
-                                    .madeMove(origin.getCoordinate(), thisView.getCoordinate());
-                            handleMadeMove(moveResult);
+                            Coordinate from = origin.getCoordinate();
+                            Coordinate to = thisView.getCoordinate();
+                            Game.Result moveResult = appState.madeMove(from, to);
+                            handleMadeMove(moveResult, from, to);
                         } else return false;
                         break;
 
@@ -151,15 +153,23 @@ public class BoardView extends ViewGroup {
         });
     }
 
-    private void handleMadeMove(Game.Result moveResult) {
+    private void handleMadeMove(Game.Result moveResult, Coordinate from, Coordinate to) {
         switch (moveResult) {
+
             case CONTINUE:
+                appState.recordMove(new GameRecord.Move(from, to));
                 break;
+
             case PROMOTION:
+                
                 break;
+
             case DRAW:
+                appState.recordMove(new GameRecord.Move(from, to));
                 break;
+
             case CHECK_MATE:
+                appState.recordMove(new GameRecord.Move(from, to));
                 showEndGameDialog();
                 break;
         }
